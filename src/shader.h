@@ -6,7 +6,7 @@
 struct shader;
 typedef struct shader Shader;
 
-Shader *Shader_new(const char *vertex_shader, const char *fragment_shader);
+Shader *Shader_new(const char *vertex_shader_source, const char *fragment_shader_source);
 void Shader_bind(Shader *shader);
 
 #endif // !SHADER_H
