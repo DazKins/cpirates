@@ -1,5 +1,4 @@
-#include <GLFW/glfw3.h>
-#include <OpenGL/gl.h>
+#include <glad/glad.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -87,5 +86,5 @@ Shader *Shader_new(const char *vertex_shader_source,
 }
 
 void Shader_bind(Shader *shader) {
-  return glUseProgram(shader->gl_shader_program_id);
+  glUseProgram(shader->gl_shader_program_id);
 }
