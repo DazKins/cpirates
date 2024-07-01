@@ -3,13 +3,13 @@
 
 #include <stdlib.h>
 
-#include "vec.h"
+#include "v.h"
 
 struct bufferObject;
 typedef struct bufferObject BufferObject;
 
 BufferObject *BufferObject_new(const size_t vertex_count,
-                               const V3 *positions,
+                               const V **positions,
                                const size_t index_count,
                                const unsigned int *indices);
 

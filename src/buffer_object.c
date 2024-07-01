@@ -9,16 +9,15 @@ struct bufferObject {
 
 const GLuint POSITION_ATTR_LOCATION = 0;
 
-BufferObject *BufferObject_new(const size_t vertex_count, const V3 *positions,
+BufferObject *BufferObject_new(const size_t vertex_count, const V **positions,
                                const size_t index_count,
                                const unsigned int *indices) {
 
   float *raw_positions = malloc(sizeof(float) * vertex_count * 3);
 
-  for (size_t i = 0; i < vertex_count; i++) {
-    raw_positions[i * 3 + 0] = positions[i].x;
-    raw_positions[i * 3 + 1] = positions[i].y;
-    raw_positions[i * 3 + 2] = positions[i].z;
+  for (size_t i = 0; i < vertex_count; i++) { raw_positions[i * 3 + 0] = V_getX(positions[i]);
+    raw_positions[i * 3 + 1] = V_getY(positions[i]);
+    raw_positions[i * 3 + 2] = V_getZ(positions[i]);
   }
 
   GLuint vao;
@@ -38,8 +37,8 @@ BufferObject *BufferObject_new(const size_t vertex_count, const V3 *positions,
   GLuint indices_buffer;
   glGenBuffers(1, &indices_buffer);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_buffer);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(unsigned int), indices,
-               GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(unsigned int),
+               indices, GL_STATIC_DRAW);
 
   free(raw_positions);
 

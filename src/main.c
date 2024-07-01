@@ -5,12 +5,14 @@
 
 #include "buffer_object.h"
 #include "file.h"
+#include "m_stack.h"
 #include "shader.h"
-#include "vec.h"
+#include "v.h"
 
 GLFWwindow *window;
 BufferObject *buffer_object;
 Shader *shader;
+MStack *mStack;
 
 int init() {
   if (glfwInit() == GLFW_FALSE) {
@@ -36,7 +38,7 @@ int init() {
 
   glfwMakeContextCurrent(window);
 
-  if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     printf("Failed to initialize GLAD\n");
     return 1;
   }
@@ -64,11 +66,11 @@ int init() {
 
   printf("Shader created\n");
 
-  const V3 positions[] = {
-      {0.5f, 0.5f, 0.0f},
-      {0.5f, -0.5f, 0.0f},
-      {-0.5f, -0.5f, 0.0f},
-  };
+  const V **positions = malloc(sizeof(V *) * 3);
+
+  positions[0] = V_new(0.5f, 0.5f, 0.0f);
+  positions[1] = V_new(0.5f, -0.5f, 0.0f);
+  positions[2] = V_new(-0.5f, -0.5f, 0.0f);
 
   const unsigned int indices[] = {0, 1, 2};
 
