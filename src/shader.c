@@ -4,10 +4,6 @@
 
 #include "shader.h"
 
-struct shader {
-  GLuint gl_shader_program_id;
-};
-
 int create_individual_shader(const char *shader, GLenum type) {
   int shader_id = glCreateShader(type);
 
@@ -34,22 +30,25 @@ int create_individual_shader(const char *shader, GLenum type) {
   return shader_id;
 }
 
-Shader *Shader_new(const char *vertex_shader_source,
+Shader Shader_new(const char *vertex_shader_source,
                    const char *fragment_shader_source) {
+  Shader shader;
+  shader.gl_shader_program_id = -1;
+
   int program_id = glCreateProgram();
 
   int vertex_shader_id =
       create_individual_shader(vertex_shader_source, GL_VERTEX_SHADER);
 
   if (vertex_shader_id == -1) {
-    return NULL;
+    return shader;
   }
 
   int fragment_shader_id =
       create_individual_shader(fragment_shader_source, GL_FRAGMENT_SHADER);
 
   if (fragment_shader_id == -1) {
-    return NULL;
+    return shader;
   }
 
   glAttachShader(program_id, vertex_shader_id);
@@ -71,20 +70,18 @@ Shader *Shader_new(const char *vertex_shader_source,
 
     free(log);
 
-    return NULL;
+    return shader;;
   }
 
 
   glDeleteShader(vertex_shader_id);
   glDeleteShader(fragment_shader_id);
 
-  Shader *shader = malloc(sizeof(Shader));
-
-  shader->gl_shader_program_id = program_id;
+  shader.gl_shader_program_id = program_id;
 
   return shader;
 }
 
-void Shader_bind(Shader *shader) {
-  glUseProgram(shader->gl_shader_program_id);
+void Shader_bind(Shader shader) {
+  glUseProgram(shader.gl_shader_program_id);
 }

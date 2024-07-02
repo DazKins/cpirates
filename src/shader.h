@@ -1,11 +1,14 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-struct shader;
-typedef struct shader Shader;
+#include <glad/glad.h>
 
-Shader *Shader_new(const char *vertex_shader_source,
-                   const char *fragment_shader_source);
-void Shader_bind(Shader *shader);
+typedef struct shader {
+  GLuint gl_shader_program_id;
+} Shader;
+
+Shader Shader_new(const char *vertex_shader_source,
+                  const char *fragment_shader_source);
+void Shader_bind(Shader shader);
 
 #endif // !SHADER_H

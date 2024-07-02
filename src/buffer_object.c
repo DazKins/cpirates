@@ -2,22 +2,20 @@
 
 #include "buffer_object.h"
 
-struct bufferObject {
-  GLuint vao_id;
-  size_t index_count;
-};
-
 const GLuint POSITION_ATTR_LOCATION = 0;
 
-BufferObject *BufferObject_new(const size_t vertex_count, const V **positions,
+BufferObject BufferObject_new(const size_t vertex_count, const V *positions,
                                const size_t index_count,
                                const unsigned int *indices) {
 
   float *raw_positions = malloc(sizeof(float) * vertex_count * 3);
 
-  for (size_t i = 0; i < vertex_count; i++) { raw_positions[i * 3 + 0] = V_getX(positions[i]);
-    raw_positions[i * 3 + 1] = V_getY(positions[i]);
-    raw_positions[i * 3 + 2] = V_getZ(positions[i]);
+  for (size_t i = 0; i < vertex_count; i++) {
+    V pos = positions[i];
+
+    raw_positions[i * 3 + 0] = pos.x;
+    raw_positions[i * 3 + 1] = pos.y;
+    raw_positions[i * 3 + 2] = pos.z;
   }
 
   GLuint vao;
@@ -42,10 +40,10 @@ BufferObject *BufferObject_new(const size_t vertex_count, const V **positions,
 
   free(raw_positions);
 
-  BufferObject *buffer_object = malloc(sizeof(BufferObject));
+  BufferObject buffer_object;
 
-  buffer_object->vao_id = vao;
-  buffer_object->index_count = index_count;
+  buffer_object.vao_id = vao;
+  buffer_object.index_count = index_count;
 
   return buffer_object;
 }

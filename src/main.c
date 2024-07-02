@@ -57,7 +57,8 @@ int init() {
     return 1;
   }
 
-  shader = Shader_new(vertex_shader_source, fragment_shader_source);
+  shader = malloc(sizeof(Shader));
+  *shader = Shader_new(vertex_shader_source, fragment_shader_source);
 
   if (shader == NULL) {
     printf("Failed to create shader\n");
@@ -66,7 +67,7 @@ int init() {
 
   printf("Shader created\n");
 
-  const V **positions = malloc(sizeof(V *) * 3);
+  V *positions = malloc(sizeof(V) * 3);
 
   positions[0] = V_new(0.5f, 0.5f, 0.0f);
   positions[1] = V_new(0.5f, -0.5f, 0.0f);
@@ -74,9 +75,11 @@ int init() {
 
   const unsigned int indices[] = {0, 1, 2};
 
-  buffer_object = BufferObject_new(3, positions, 3, indices);
+  buffer_object = malloc(sizeof(BufferObject));
+  *buffer_object = BufferObject_new(3, positions, 3, indices);
 
-  mStack = MStack_new();
+  mStack = malloc(sizeof(MStack));
+  *mStack = MStack_new();
 
   return 0;
 }
@@ -98,7 +101,7 @@ int main() {
     glClearColor(0.2f, 0.3f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    Shader_bind(shader);
+    Shader_bind(*shader);
     BufferObject_render(buffer_object);
 
     glfwSwapBuffers(window);

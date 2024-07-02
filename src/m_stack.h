@@ -3,14 +3,18 @@
 
 #include "m.h"
 
-struct mStack;
-typedef struct mStack MStack;
+struct mStack_node;
+typedef struct mStack_node MStack_node;
 
-MStack *MStack_new();
+typedef struct mStack {
+  MStack_node *head;
+} MStack;
 
-void MStack_push(MStack *ms, const M *m);
-const M *MStack_pop(MStack *ms);
-const M *MStack_peek(MStack *ms);
+MStack MStack_new();
+
+void MStack_push(MStack *ms, const M m);
+const M MStack_pop(MStack *ms);
+const M MStack_peek(MStack ms);
 void MStack_load_identity(MStack *ms);
 
 #endif // !MAT_STACK_H
