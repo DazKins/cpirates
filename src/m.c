@@ -31,3 +31,8 @@ M *M_I(const size_t d) {
   }
   return m;
 }
+
+void M_delete(M *m) {
+  free(m->data);
+  free(m);
+}

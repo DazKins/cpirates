@@ -1,7 +1,7 @@
 #include "m_stack.h"
 
 typedef struct mStack_node {
-  const M *m;
+  M *m;
   struct mStack_node *next;
 } MStack_node;
 
@@ -20,8 +20,8 @@ MStack *MStack_new() {
 }
 
 void MStack_push(MStack *ms, const M *m) {
-  const M *cur = ms->head->m;
-  const M *nm = M_mul(cur, m);
+  M *cur = ms->head->m;
+  M *nm = M_mul(cur, m);
 
   MStack_node *new_head = malloc(sizeof(MStack_node));
   new_head->m = nm;
@@ -41,3 +41,18 @@ const M *MStack_pop(MStack *ms) {
 }
 
 const M *MStack_peek(MStack *ms) { return ms->head->m; }
+
+void MStack_node_delete(MStack_node *node) {
+  if (node->next != NULL) {
+    MStack_node_delete(node->next);
+  }
+  M_delete(node->m);
+  free(node);
+}
+
+void MStack_load_identity(MStack *ms) {
+  if (ms->head->next != NULL) {
+    MStack_node_delete(ms->head->next);
+  }
+  ms->head->m = M_I(4);
+}

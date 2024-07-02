@@ -76,6 +76,8 @@ int init() {
 
   buffer_object = BufferObject_new(3, positions, 3, indices);
 
+  mStack = MStack_new();
+
   return 0;
 }
 
@@ -87,6 +89,8 @@ int main() {
   printf("Initialized\n");
 
   while (!glfwWindowShouldClose(window)) {
+    MStack_load_identity(mStack);
+
     int window_width, window_height;
     glfwGetFramebufferSize(window, &window_width, &window_height);
     glViewport(0, 0, window_width, window_height);
