@@ -6,7 +6,7 @@
 
 #include "../math/v.h"
 
-typedef struct bufferObject {
+typedef struct {
   GLuint vao_id;
   size_t index_count;
 } BufferObject;

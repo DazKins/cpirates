@@ -1,7 +1,7 @@
 #ifndef VEC_H
 #define VEC_H
 
-typedef struct v {
+typedef struct {
   float x;
   float y;
   float z;

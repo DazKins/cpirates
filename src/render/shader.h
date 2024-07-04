@@ -5,7 +5,7 @@
 
 #include "../math/m.h"
 
-typedef struct shader {
+typedef struct {
   GLuint gl_shader_program_id;
 } Shader;
 

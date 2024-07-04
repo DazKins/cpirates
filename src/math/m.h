@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-typedef struct m {
+typedef struct {
   size_t d;
   float *data;
 } M;

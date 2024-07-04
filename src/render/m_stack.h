@@ -6,7 +6,7 @@
 struct mStack_node;
 typedef struct mStack_node MStack_node;
 
-typedef struct mStack {
+typedef struct {
   MStack_node *head;
 } MStack;
 
