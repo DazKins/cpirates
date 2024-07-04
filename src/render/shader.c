@@ -31,7 +31,7 @@ int create_individual_shader(const char *shader, GLenum type) {
 }
 
 Shader Shader_new(const char *vertex_shader_source,
-                   const char *fragment_shader_source) {
+                  const char *fragment_shader_source) {
   Shader shader;
   shader.gl_shader_program_id = -1;
 
@@ -70,9 +70,9 @@ Shader Shader_new(const char *vertex_shader_source,
 
     free(log);
 
-    return shader;;
+    return shader;
+    ;
   }
-
 
   glDeleteShader(vertex_shader_id);
   glDeleteShader(fragment_shader_id);
@@ -82,6 +82,11 @@ Shader Shader_new(const char *vertex_shader_source,
   return shader;
 }
 
-void Shader_bind(Shader shader) {
+void Shader_bind(const Shader shader) {
   glUseProgram(shader.gl_shader_program_id);
+}
+
+void Shader_set_uniform_m(const Shader shader, const char *name, const M m) {
+  GLint location = glGetUniformLocation(shader.gl_shader_program_id, name);
+  glUniformMatrix4fv(location, 1, GL_FALSE, m.data);
 }

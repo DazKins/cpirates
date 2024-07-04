@@ -17,7 +17,7 @@ BINSHADERDIR = $(BINDIR)/shaders
 TARGET = $(BINDIR)/cCraft
 
 # Source files
-SOURCES = $(wildcard $(SRCDIR)/*.c)
+SOURCES = $(shell find ${SRCDIR} -name '*.c')
 
 # Object files
 OBJECTS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.o, $(SOURCES))
@@ -38,6 +38,7 @@ $(TARGET): $(OBJECTS)
 
 # Compile source files to object files
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(COFLAGS) -c $< -o $@
 
 # Copy shader files to bin directory

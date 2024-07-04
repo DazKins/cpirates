@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "buffer_object.h"
-#include "file.h"
-#include "m_stack.h"
-#include "shader.h"
-#include "v.h"
+#include "render/buffer_object.h"
+#include "util/file.h"
+#include "render/m_stack.h"
+#include "render/shader.h"
+#include "math/v.h"
 
 GLFWwindow *window;
 BufferObject *buffer_object;

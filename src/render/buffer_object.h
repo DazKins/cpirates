@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <stdlib.h>
 
-#include "v.h"
+#include "../math/v.h"
 
 typedef struct bufferObject {
   GLuint vao_id;
