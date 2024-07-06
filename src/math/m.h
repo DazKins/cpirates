@@ -19,6 +19,9 @@ M M_RotX(float a);
 M M_RotY(float a);
 M M_RotZ(float a);
 M M_Scale(V v);
+M M_perspective(float fov, float aspect, float near, float far);
+
+void M_print(M m);
 
 void M_free(M m);
 
