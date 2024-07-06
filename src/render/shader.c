@@ -88,5 +88,4 @@ void Shader_bind(const Shader shader) {
 
 void Shader_set_uniform_m(const Shader shader, const char *name, const M m) {
   GLint location = glGetUniformLocation(shader.gl_shader_program_id, name);
-  glUniformMatrix4fv(location, 1, GL_FALSE, m.data);
-}
+  glUniformMatrix4fv(location, 1, GL_FALSE, m.data); }

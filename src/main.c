@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "math/m.h"
 #include "render/buffer_object.h"
 #include "util/file.h"
 #include "render/m_stack.h"
@@ -91,17 +92,31 @@ int main() {
 
   printf("Initialized\n");
 
+  float t = 0.0f;
+
   while (!glfwWindowShouldClose(window)) {
     MStack_load_identity(mStack);
+    t += 0.01f;
 
     int window_width, window_height;
     glfwGetFramebufferSize(window, &window_width, &window_height);
     glViewport(0, 0, window_width, window_height);
 
+    MStack_push(
+        mStack,
+        M_Scale(V_new((float)window_height / (float)window_width, 1.0f, 1.0f)));
+
     glClearColor(0.2f, 0.3f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    MStack_push(mStack, M_RotX(t));
+    MStack_push(mStack, M_RotY(t));
+    MStack_push(mStack, M_RotZ(t));
+
     Shader_bind(*shader);
+
+    Shader_set_uniform_m(*shader, "mvp", MStack_peek(*mStack));
+
     BufferObject_render(buffer_object);
 
     glfwSwapBuffers(window);

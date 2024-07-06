@@ -1,4 +1,5 @@
 #include "m_stack.h"
+#include <stdio.h>
 
 struct mStack_node {
   M m;
@@ -38,9 +39,9 @@ const M MStack_pop(MStack *ms) {
 
 const M MStack_peek(MStack ms) { return ms.head->m; }
 
-void MStack_node_delete(MStack_node *node) {
+void MStack_node_free(MStack_node *node) {
   if (node->next != NULL) {
-    MStack_node_delete(node->next);
+    MStack_node_free(node->next);
   }
   M_free(node->m);
   free(node);
@@ -48,7 +49,8 @@ void MStack_node_delete(MStack_node *node) {
 
 void MStack_load_identity(MStack *ms) {
   if (ms->head->next != NULL) {
-    MStack_node_delete(ms->head->next);
+    MStack_node_free(ms->head->next);
   }
   ms->head->m = M_I(4);
+  ms->head->next = NULL;
 }
