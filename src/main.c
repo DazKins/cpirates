@@ -6,6 +6,7 @@
 
 #include "math/m.h"
 #include "render/buffer_object.h"
+#include "render/camera.h"
 #include "util/file.h"
 #include "util/input.h"
 #include "util/keys.h"
@@ -18,13 +19,12 @@
 BufferObject *buffer_object;
 Shader *shader;
 MStack *m_stack;
-
-M *perspective;
+Camera *camera;
 
 void window_size_callback(int width, int height) {
   printf("Window resized to %dx%d\n", width, height);
 
-  *perspective = M_perspective(M_PI_2, (float)width / height, 0.1f, 100.0f);
+  camera->aspect_ratio = (float)width / height;
   glViewport(0, 0, width, height);
 }
 
@@ -43,6 +43,7 @@ int init() {
   printf("Window created\n");
 
   Window_set_window_size_callback(window_size_callback);
+  Window_hide_cursor();
 
   const char *vertex_shader_source = load_file("shaders/shader.vert");
 
@@ -83,43 +84,32 @@ int init() {
   m_stack = malloc(sizeof(MStack));
   *m_stack = MStack_new();
 
-  perspective = malloc(sizeof(M));
-  *perspective = M_perspective(M_PI_2, 1280.0f / 720.0f, 0.01f, 100.0f);
+  camera = malloc(sizeof(Camera));
+  *camera = Camera_new(1280.0f / 720.0f, M_PI / 2.0f, 0.01f, 100.0f);
 
   return 0;
 }
 
-float x = 0.0f;
-float y = 0.0f;
-float z = 0.0f;
+int should_close = 0;
 
 void tick() {
-  if (Input_is_key_down(KEY_W)) {
-    z -= 0.01f;
-  }
+  Input_tick();
 
-  if (Input_is_key_down(KEY_S)) {
-    z += 0.01f;
-  }
+  Camera_process_input(camera);
 
-  if (Input_is_key_down(KEY_A)) {
-    x -= 0.01f;
-  }
-
-  if (Input_is_key_down(KEY_D)) {
-    x += 0.01f;
+  if (Input_is_key_down(KEY_ESCAPE)) {
+    should_close = 1;
   }
 }
 
 void render() {
   MStack_load_identity(m_stack);
 
-  MStack_push(m_stack, *perspective);
+  M camera_transform = Camera_get_transform(camera);
+  MStack_push(m_stack, camera_transform);
 
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
-
-  MStack_push(m_stack, M_Translate(V_new(-x, 0.0f, -z)));
 
   Shader_bind(*shader);
 
@@ -148,7 +138,7 @@ int main() {
   long ns_per_log = 5e9;
   long s_per_log = ns_per_log / 1e9;
 
-  while (!Window_should_close()) {
+  while (!Window_should_close() && !should_close) {
     long current_frame_time = get_time_ns();
     long delta_ns = current_frame_time - last_time;
     last_time = current_frame_time;

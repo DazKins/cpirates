@@ -7,6 +7,8 @@
 
 static GLFWwindow *glfwWindow;
 static void (*window_size_callback)(int, int);
+static void (*cursor_pos_callback)(double, double);
+
 
 void glfw_window_size_callback(GLFWwindow *window, int width, int height) {
   if (!window_size_callback) {
@@ -47,8 +49,13 @@ void Window_create(const int width, const int height, const char *title) {
     exit(1);
   }
 
+  if (glfwRawMouseMotionSupported()) {
+    glfwSetInputMode(glfwWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+  }
+
   glfwSetWindowSizeCallback(glfwWindow, glfw_window_size_callback);
   glfwSetKeyCallback(glfwWindow, glfw_key_callback);
+  glfwSetCursorPosCallback(glfwWindow, glfw_cursor_pos_callback);
 }
 
 int Window_should_close() { return glfwWindowShouldClose(glfwWindow); }
@@ -56,6 +63,10 @@ int Window_should_close() { return glfwWindowShouldClose(glfwWindow); }
 void Window_poll_events() { glfwPollEvents(); }
 
 void Window_swap_buffers() { glfwSwapBuffers(glfwWindow); }
+
+void Window_hide_cursor() {
+  glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
 
 void Window_set_window_size_callback(void (*callback)(int, int)) {
   window_size_callback = callback;
