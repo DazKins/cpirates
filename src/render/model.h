@@ -14,6 +14,6 @@ typedef struct {
 Model Model_new(const size_t vertex_count, const V *positions,
                 const size_t index_count, const unsigned int *indices);
 
-void Model_render(Model *buffer_object);
+void Model_render(const Model *buffer_object);
 
 #endif // !MODEL_H

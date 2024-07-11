@@ -82,10 +82,24 @@ Shader Shader_new(const char *vertex_shader_source,
   return shader;
 }
 
+GLuint cur_bound_gl_shader_program_id = -1;
+
 void Shader_bind(const Shader shader) {
+  if (cur_bound_gl_shader_program_id == shader.gl_shader_program_id) {
+    return;
+  }
+
   glUseProgram(shader.gl_shader_program_id);
+  cur_bound_gl_shader_program_id = shader.gl_shader_program_id;
 }
 
-void Shader_set_uniform_m(const Shader shader, const char *name, const M m) {
-  GLint location = glGetUniformLocation(shader.gl_shader_program_id, name);
-  glUniformMatrix4fv(location, 1, GL_FALSE, m.data); }
+Shader get_currently_bound_shader() {
+  Shader shader;
+  shader.gl_shader_program_id = cur_bound_gl_shader_program_id;
+  return shader;
+}
+
+void Shader_set_uniform_m(const Shader *shader, const char *name, const M *m) {
+  GLint location = glGetUniformLocation(shader->gl_shader_program_id, name);
+  glUniformMatrix4fv(location, 1, GL_FALSE, m->data);
+}

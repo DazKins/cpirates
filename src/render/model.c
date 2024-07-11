@@ -48,7 +48,7 @@ Model Model_new(const size_t vertex_count, const V *positions,
   return model;
 }
 
-void Model_render(Model *buffer_object) {
+void Model_render(const Model *buffer_object) {
   glBindVertexArray(buffer_object->_vao_id);
   glDrawElements(GL_TRIANGLES, buffer_object->_index_count, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
