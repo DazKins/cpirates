@@ -69,7 +69,7 @@ int init() {
 
   printf("Shader created\n");
 
-  V *positions = malloc(sizeof(V) * 3);
+  V *positions = malloc(sizeof(V) * 4);
 
   positions[0] = V_new(0.5f, 0.5f, 0.0f);
   positions[1] = V_new(0.5f, -0.5f, 0.0f);
