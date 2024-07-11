@@ -11,8 +11,6 @@ void glfw_key_callback(GLFWwindow *window, int key, int scancode, int action,
   }
 }
 
-static int mouse_delta_first_tick = 1;
-
 static V2 prev_mouse_pos;
 static V2 mouse_pos;
 
@@ -28,11 +26,7 @@ V2 Input_get_mouse_pos() { return mouse_pos; };
 int Input_is_key_down(int key) { return keys_down[key]; }
 
 void Input_tick() {
-  if (!mouse_delta_first_tick) {
-    mouse_delta = V2_sub(&mouse_pos, &prev_mouse_pos);
-  } else {
-    mouse_delta_first_tick = 0;
-  }
+  mouse_delta = V2_sub(&mouse_pos, &prev_mouse_pos);
   prev_mouse_pos = mouse_pos;
 }
 
