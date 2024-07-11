@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "math/m.h"
-#include "render/buffer_object.h"
+#include "render/model.h"
 #include "render/camera.h"
 #include "util/file.h"
 #include "util/input.h"
@@ -16,7 +16,7 @@
 #include "render/window.h"
 #include "math/v.h"
 
-BufferObject *buffer_object;
+Model *model;
 Shader *shader;
 MStack *m_stack;
 Camera *camera;
@@ -78,8 +78,8 @@ int init() {
 
   const unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
-  buffer_object = malloc(sizeof(BufferObject));
-  *buffer_object = BufferObject_new(4, positions, 6, indices);
+  model = malloc(sizeof(Model));
+  *model = Model_new(4, positions, 6, indices);
 
   m_stack = malloc(sizeof(MStack));
   *m_stack = MStack_new();
@@ -115,7 +115,7 @@ void render() {
 
   Shader_set_uniform_m(*shader, "mvp", MStack_peek(*m_stack));
 
-  BufferObject_render(buffer_object);
+  Model_render(model);
 
   Window_swap_buffers();
 }

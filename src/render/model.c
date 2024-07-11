@@ -1,10 +1,10 @@
 #include <glad/glad.h>
 
-#include "buffer_object.h"
+#include "model.h"
 
 const GLuint POSITION_ATTR_LOCATION = 0;
 
-BufferObject BufferObject_new(const size_t vertex_count, const V *positions,
+Model Model_new(const size_t vertex_count, const V *positions,
                                const size_t index_count,
                                const unsigned int *indices) {
 
@@ -40,16 +40,16 @@ BufferObject BufferObject_new(const size_t vertex_count, const V *positions,
 
   free(raw_positions);
 
-  BufferObject buffer_object;
+  Model model;
 
-  buffer_object.vao_id = vao;
-  buffer_object.index_count = index_count;
+  model._vao_id = vao;
+  model._index_count = index_count;
 
-  return buffer_object;
+  return model;
 }
 
-void BufferObject_render(BufferObject *buffer_object) {
-  glBindVertexArray(buffer_object->vao_id);
-  glDrawElements(GL_TRIANGLES, buffer_object->index_count, GL_UNSIGNED_INT, 0);
+void Model_render(Model *buffer_object) {
+  glBindVertexArray(buffer_object->_vao_id);
+  glDrawElements(GL_TRIANGLES, buffer_object->_index_count, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
