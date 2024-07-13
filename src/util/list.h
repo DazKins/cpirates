@@ -7,19 +7,25 @@ typedef struct _listNode {
   struct _listNode *prev;
 } _ListNode;
 
+void _ListNode_free(_ListNode *node);
+
 typedef struct list {
-  void *data;
   _ListNode *head;
   _ListNode *end;
 } List;
+
+List List_new();
+
+void List_push(List *list, void *data);
+void List_free(List list);
 
 typedef struct {
   _ListNode *current;
 } Iterator;
 
-void List_push(List *list, void *data);
-
 Iterator Iterator_new(List *list);
+
+int Iterator_has_next(Iterator *it);
 void *Iterator_next(Iterator *it);
 
 #endif // !LIST_H

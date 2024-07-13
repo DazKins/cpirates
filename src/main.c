@@ -7,6 +7,7 @@
 #include "math/m.h"
 #include "render/model.h"
 #include "render/camera.h"
+#include "render/model_builder.h"
 #include "render/render_context.h"
 #include "util/file.h"
 #include "util/input.h"
@@ -31,16 +32,7 @@ void window_size_callback(int width, int height) {
 int init() {
   time_init();
 
-  if (glfwInit() == GLFW_FALSE) {
-    printf("Failed to initialize GLFW\n");
-    return 1;
-  }
-
-  printf("GLFW initialized\n");
-
   Window_create(1280, 720, "Hello World");
-
-  printf("Window created\n");
 
   Window_set_window_size_callback(window_size_callback);
   Window_hide_cursor();
@@ -69,17 +61,21 @@ int init() {
 
   printf("Shader created\n");
 
-  V *positions = malloc(sizeof(V) * 4);
+  ModelBuilder mb = ModelBuilder_new();
 
-  positions[0] = V_new(0.5f, 0.5f, 0.0f);
-  positions[1] = V_new(0.5f, -0.5f, 0.0f);
-  positions[2] = V_new(-0.5f, -0.5f, 0.0f);
-  positions[3] = V_new(-0.5f, 0.5f, 0.0f);
+  ModelBuilder_push_position(&mb, V_new(0.5f, 0.5f, 0.0f));
+  ModelBuilder_push_position(&mb, V_new(0.5f, -0.5f, 0.0f));
+  ModelBuilder_push_position(&mb, V_new(-0.5f, -0.5f, 0.0f));
+  ModelBuilder_push_position(&mb, V_new(-0.5f, 0.5f, 0.0f));
 
-  const unsigned int indices[] = {0, 1, 2, 2, 3, 0};
+  ModelBuilder_push_index(&mb, 0);
+  ModelBuilder_push_index(&mb, 1);
+  ModelBuilder_push_index(&mb, 2);
+  ModelBuilder_push_index(&mb, 2);
+  ModelBuilder_push_index(&mb, 3);
+  ModelBuilder_push_index(&mb, 0);
 
-  model = malloc(sizeof(Model));
-  *model = Model_new(4, positions, 6, indices);
+  model = ModelBuilder_build(&mb);
 
   render_context = malloc(sizeof(RenderContext));
   *render_context = RenderContext_new();
