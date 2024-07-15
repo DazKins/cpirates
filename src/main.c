@@ -15,12 +15,14 @@
 #include "util/tim3.h"
 #include "render/shader.h"
 #include "render/window.h"
+#include "render/texture.h"
 #include "math/v.h"
 
 Model *model;
 Shader *shader;
 RenderContext *render_context;
 Camera *camera;
+Texture *texture;
 
 void window_size_callback(int width, int height) {
   printf("Window resized to %dx%d\n", width, height);
@@ -37,14 +39,17 @@ int init() {
   Window_set_window_size_callback(window_size_callback);
   Window_hide_cursor();
 
-  const char *vertex_shader_source = load_file("shaders/shader.vert");
+  texture = malloc(sizeof(Texture));
+  *texture = Texture_load_from_image("res/img/texture.png");
+
+  const char *vertex_shader_source = load_file("res/shaders/shader.vert");
 
   if (vertex_shader_source == NULL) {
     printf("Failed to load vertex shader source\n");
     return 1;
   }
 
-  const char *fragment_shader_source = load_file("shaders/shader.frag");
+  const char *fragment_shader_source = load_file("res/shaders/shader.frag");
 
   if (fragment_shader_source == NULL) {
     printf("Failed to load fragment shader source\n");
@@ -63,10 +68,21 @@ int init() {
 
   ModelBuilder mb = ModelBuilder_new();
 
-  ModelBuilder_push_position(&mb, V_new(0.5f, 0.5f, 0.0f));
-  ModelBuilder_push_position(&mb, V_new(0.5f, -0.5f, 0.0f));
-  ModelBuilder_push_position(&mb, V_new(-0.5f, -0.5f, 0.0f));
-  ModelBuilder_push_position(&mb, V_new(-0.5f, 0.5f, 0.0f));
+  ModelBuilder_set_position(&mb, V_new(0.5f, 0.5f, 0.0f));
+  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 1.0f));
+  ModelBuilder_push_vertex(&mb);
+
+  ModelBuilder_set_position(&mb, V_new(0.5f, -0.5f, 0.0f));
+  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 0.0f));
+  ModelBuilder_push_vertex(&mb);
+
+  ModelBuilder_set_position(&mb, V_new(-0.5f, -0.5f, 0.0f));
+  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 0.0f));
+  ModelBuilder_push_vertex(&mb);
+
+  ModelBuilder_set_position(&mb, V_new(-0.5f, 0.5f, 0.0f));
+  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 1.0f));
+  ModelBuilder_push_vertex(&mb);
 
   ModelBuilder_push_index(&mb, 0);
   ModelBuilder_push_index(&mb, 1);
@@ -107,6 +123,7 @@ void render() {
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  Texture_bind(texture);
   Shader_bind(*shader);
 
   Model_render(model);

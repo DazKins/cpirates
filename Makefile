@@ -3,15 +3,15 @@ CC = cc
 
 # Compiler Flags
 COFLAGS = -DGL_SILENCE_DEPRECATION
-CCFLAGS = -lglfw -framework OpenGL
+CCFLAGS = -lpng -lglfw -framework OpenGL
 
 # Directories
 SRCDIR = src
-SHADERDIR = shaders
+RESDIR = res
 BUILDDIR = build
 BINDIR = bin
 
-BINSHADERDIR = $(BINDIR)/shaders
+BINRESDIR = $(BINDIR)/res
 
 # Target executable
 TARGET = $(BINDIR)/cCraft
@@ -23,14 +23,14 @@ SOURCES = $(shell find ${SRCDIR} -name '*.c')
 OBJECTS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.o, $(SOURCES))
 
 # Shader files
-SHADERS := $(wildcard $(SHADERDIR)/*.vert) $(wildcard $(SHADERDIR)/*.frag)
-SHADER_TARGETS := $(patsubst $(SHADERDIR)/%, $(BINSHADERDIR)/%, $(SHADERS))
+RESS := $(wildcard $(RESDIR)/*)
+RES_TARGETS := $(patsubst $(RESDIR)/%, $(BINRESDIR)/%, $(RESS))
 
 # Create build and bin directories if they don't exist
-$(shell mkdir -p $(BUILDDIR) $(BINDIR) $(BINSHADERDIR))
+$(shell mkdir -p $(BUILDDIR) $(BINDIR) $(BINRESDIR))
 
 # Default target
-all: $(TARGET) shaders
+all: $(TARGET) ress
 
 # Link object files to create the final executable
 $(TARGET): $(OBJECTS)
@@ -42,13 +42,10 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(COFLAGS) -c $< -o $@
 
 # Copy shader files to bin directory
-shaders: $(SHADER_TARGETS)
+ress: $(RES_TARGETS)
 
-$(BINSHADERDIR)/%.vert: $(SHADERDIR)/%.vert | $(BINSHADERDIR)
-	cp $< $@
-
-$(BINSHADERDIR)/%.frag: $(SHADERDIR)/%.frag | $(BINSHADERDIR)
-	cp $< $@
+$(BINRESDIR)/%: $(RESDIR)/% | $(BINRESDIR)
+	cp -r $< $@
 
 $(BINDIR):
 	mkdir -p $(BINDIR)
