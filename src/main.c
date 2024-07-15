@@ -126,7 +126,6 @@ void render() {
   Texture_bind(texture);
   Shader_bind(*shader);
 
-  Model_render(model);
   RenderContext_render(render_context, model);
 
   Window_swap_buffers();
