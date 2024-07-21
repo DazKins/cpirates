@@ -3,6 +3,15 @@
 
 ModelBuilder ModelBuilder_new() {
   ModelBuilder mb;
+  mb._indices = List_new();
+  mb._positions = List_new();
+  mb._tex_coords = List_new();
+
+  mb._indices_count = 0;
+  mb._vertices_count = 0;
+
+  mb._pos = V_new(0.0f, 0.0f, 0.0f);
+  mb._tex_coord = V2_new(0.0f, 0.0f);
   return mb;
 }
 

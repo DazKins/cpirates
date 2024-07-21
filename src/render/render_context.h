@@ -1,7 +1,7 @@
 #ifndef RENDER_CONTEXT_H
 #define RENDER_CONTEXT_H
 
-#include "model.h"
+#include "model/model.h"
 #include "m_stack.h"
 
 typedef struct {

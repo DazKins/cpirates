@@ -5,24 +5,16 @@
 #include <stdlib.h>
 
 #include "math/m.h"
-#include "render/model.h"
+#include "render/game/game.h"
 #include "render/camera.h"
-#include "render/model_builder.h"
 #include "render/render_context.h"
-#include "util/file.h"
 #include "util/input.h"
 #include "util/keys.h"
 #include "util/tim3.h"
-#include "render/shader.h"
 #include "render/window.h"
-#include "render/texture.h"
-#include "math/v.h"
 
-Model *model;
-Shader *shader;
 RenderContext *render_context;
 Camera *camera;
-Texture *texture;
 
 void window_size_callback(int width, int height) {
   printf("Window resized to %dx%d\n", width, height);
@@ -39,65 +31,20 @@ int init() {
   Window_set_window_size_callback(window_size_callback);
   Window_hide_cursor();
 
-  texture = malloc(sizeof(Texture));
-  *texture = Texture_load_from_image("res/img/texture.png");
-
-  const char *vertex_shader_source = load_file("res/shaders/shader.vert");
-
-  if (vertex_shader_source == NULL) {
-    printf("Failed to load vertex shader source\n");
+  if (Game_init() != 0) {
     return 1;
   }
 
-  const char *fragment_shader_source = load_file("res/shaders/shader.frag");
-
-  if (fragment_shader_source == NULL) {
-    printf("Failed to load fragment shader source\n");
+  if (GameRenderer_init() != 0) {
     return 1;
   }
-
-  shader = malloc(sizeof(Shader));
-  *shader = Shader_new(vertex_shader_source, fragment_shader_source);
-
-  if (shader == NULL) {
-    printf("Failed to create shader\n");
-    return 1;
-  }
-
-  printf("Shader created\n");
-
-  ModelBuilder mb = ModelBuilder_new();
-
-  ModelBuilder_set_position(&mb, V_new(0.5f, 0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 1.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(0.5f, -0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 0.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(-0.5f, -0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 0.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(-0.5f, 0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 1.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_push_index(&mb, 0);
-  ModelBuilder_push_index(&mb, 1);
-  ModelBuilder_push_index(&mb, 2);
-  ModelBuilder_push_index(&mb, 2);
-  ModelBuilder_push_index(&mb, 3);
-  ModelBuilder_push_index(&mb, 0);
-
-  model = ModelBuilder_build(&mb);
 
   render_context = malloc(sizeof(RenderContext));
   *render_context = RenderContext_new();
 
   camera = malloc(sizeof(Camera));
   *camera = Camera_new(1280.0f / 720.0f, M_PI / 2.0f, 0.01f, 100.0f);
+
 
   return 0;
 }
@@ -108,6 +55,8 @@ void tick() {
   Input_tick();
 
   Camera_process_input(camera);
+
+  Game_tick();
 
   if (Input_is_key_down(KEY_ESCAPE)) {
     should_close = 1;
@@ -123,10 +72,7 @@ void render() {
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  Texture_bind(texture);
-  Shader_bind(*shader);
-
-  RenderContext_render(render_context, model);
+  GameRenderer_render(render_context);
 
   Window_swap_buffers();
 }

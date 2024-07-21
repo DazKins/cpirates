@@ -4,6 +4,8 @@
 
 List List_new() {
   List list;
+  list.head = NULL;
+  list.end = NULL;
   return list;
 }
 

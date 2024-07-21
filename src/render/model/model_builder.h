@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-#include "../math/v.h"
-#include "../util/list.h"
+#include "../../math/v.h"
+#include "../../util/list.h"
 #include "model.h"
 
 typedef struct {

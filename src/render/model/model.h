@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <stdlib.h>
 
-#include "../math/v.h"
+#include "../../math/v.h"
 
 typedef struct {
   GLuint _vao_id;

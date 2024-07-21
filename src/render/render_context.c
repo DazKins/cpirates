@@ -1,5 +1,5 @@
 #include "render_context.h"
-#include "model.h"
+
 #include "shader.h"
 
 RenderContext RenderContext_new() {
