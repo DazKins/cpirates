@@ -2,9 +2,11 @@
 
 #include <stdio.h>
 
+#include "../../game/entity/entity.h"
 #include "../../render/model/model.h"
 #include "../../render/shader.h"
 #include "../../render/model/model_builder.h"
+#include "../../render/model/ship_model.h"
 #include "../../render/texture.h"
 #include "../../util/file.h"
 
@@ -39,28 +41,7 @@ int GameRenderer_init() {
 
   ModelBuilder mb = ModelBuilder_new();
 
-  ModelBuilder_set_position(&mb, V_new(0.5f, 0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 1.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(0.5f, -0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(1.0f, 0.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(-0.5f, -0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 0.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_set_position(&mb, V_new(-0.5f, 0.5f, 0.0f));
-  ModelBuilder_set_tex_coord(&mb, V2_new(0.0f, 1.0f));
-  ModelBuilder_push_vertex(&mb);
-
-  ModelBuilder_push_index(&mb, 0);
-  ModelBuilder_push_index(&mb, 1);
-  ModelBuilder_push_index(&mb, 2);
-  ModelBuilder_push_index(&mb, 2);
-  ModelBuilder_push_index(&mb, 3);
-  ModelBuilder_push_index(&mb, 0);
+  ShipModel_build(&mb);
 
   model = ModelBuilder_build(&mb);
 
@@ -73,6 +54,12 @@ int GameRenderer_init() {
 void GameRenderer_render(RenderContext *render_context) {
   Texture_bind(texture);
   Shader_bind(*shader);
+
+  Iterator entities_iter = Iterator_new(&Game_entities);
+  while (Iterator_has_next(&entities_iter)) {
+    Entity *entity = Iterator_next(&entities_iter);
+
+  }
 
   RenderContext_render(render_context, model);
 }

@@ -24,9 +24,12 @@ ModelBuilder ModelBuilder_new();
 void ModelBuilder_set_position(ModelBuilder *mb, V pos);
 void ModelBuilder_set_tex_coord(ModelBuilder *mb, V2 tex_coord);
 
-void ModelBuilder_push_vertex(ModelBuilder *mb);
+unsigned int ModelBuilder_push_vertex(ModelBuilder *mb);
 
 void ModelBuilder_push_index(ModelBuilder *mb, const unsigned int index);
+
+void ModelBuilder_push_quad(ModelBuilder *mb, V v0, V2 uv0, V v1, V2 uv1, V v2,
+                            V2 uv2, V v3, V2 uv3);
 
 Model *ModelBuilder_build(ModelBuilder *mb);
 

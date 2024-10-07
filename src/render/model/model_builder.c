@@ -21,7 +21,7 @@ void ModelBuilder_set_tex_coord(ModelBuilder *mb, V2 tex_coord) {
   mb->_tex_coord = tex_coord;
 }
 
-void ModelBuilder_push_vertex(ModelBuilder *mb) {
+unsigned int ModelBuilder_push_vertex(ModelBuilder *mb) {
   V *pos = malloc(sizeof(V));
   V2 *tex_coord = malloc(sizeof(V2));
 
@@ -31,7 +31,7 @@ void ModelBuilder_push_vertex(ModelBuilder *mb) {
   List_push(&mb->_positions, pos);
   List_push(&mb->_tex_coords, tex_coord);
 
-  mb->_vertices_count++;
+  return mb->_vertices_count++;
 }
 
 void ModelBuilder_push_index(ModelBuilder *mb, unsigned int index) {
@@ -39,6 +39,32 @@ void ModelBuilder_push_index(ModelBuilder *mb, unsigned int index) {
   *index_copy = index;
   List_push(&mb->_indices, index_copy);
   mb->_indices_count++;
+}
+
+void ModelBuilder_push_quad(ModelBuilder *mb, V v0, V2 uv0, V v1, V2 uv1, V v2,
+                            V2 uv2, V v3, V2 uv3) {
+  ModelBuilder_set_position(mb, v0);
+  ModelBuilder_set_tex_coord(mb, uv0);
+  unsigned int i0 = ModelBuilder_push_vertex(mb);
+
+  ModelBuilder_set_position(mb, v1);
+  ModelBuilder_set_tex_coord(mb, uv1);
+  unsigned int i1 = ModelBuilder_push_vertex(mb);
+
+  ModelBuilder_set_position(mb, v2);
+  ModelBuilder_set_tex_coord(mb, uv2);
+  unsigned int i2 = ModelBuilder_push_vertex(mb);
+
+  ModelBuilder_set_position(mb, v3);
+  ModelBuilder_set_tex_coord(mb, uv3);
+  unsigned int i3 = ModelBuilder_push_vertex(mb);
+
+  ModelBuilder_push_index(mb, i0);
+  ModelBuilder_push_index(mb, i1);
+  ModelBuilder_push_index(mb, i2);
+  ModelBuilder_push_index(mb, i2);
+  ModelBuilder_push_index(mb, i3);
+  ModelBuilder_push_index(mb, i0);
 }
 
 Model *ModelBuilder_build(ModelBuilder *mb) {

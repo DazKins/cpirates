@@ -1,5 +1,14 @@
 #include "v.h"
 
+const V V_0 = {0.0f, 0.0f, 0.0f};
+
+const V2 V2_0 = {0.0f, 0.0f};
+
+const V2 V2_00 = {0.0f, 0.0f};
+const V2 V2_01 = {0.0f, 1.0f};
+const V2 V2_10 = {1.0f, 0.0f};
+const V2 V2_11 = {1.0f, 1.0f};
+
 V V_new(const float x, const float y, const float z) {
   V v;
   v.x = x;
@@ -15,10 +24,6 @@ V2 V2_new(const float x, const float y) {
   return v;
 }
 
-V V_neg(const V *v) {
-  return V_new(-v->x, -v->y, -v->z);
-}
+V V_neg(const V *v) { return V_new(-v->x, -v->y, -v->z); }
 
-V2 V2_sub(const V2 *a, const V2 *b) {
-  return V2_new(a->x - b->x, a->y - b->y);
-}
+V2 V2_sub(const V2 *a, const V2 *b) { return V2_new(a->x - b->x, a->y - b->y); }

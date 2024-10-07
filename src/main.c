@@ -45,6 +45,7 @@ int init() {
   camera = malloc(sizeof(Camera));
   *camera = Camera_new(1280.0f / 720.0f, M_PI / 2.0f, 0.01f, 100.0f);
 
+  glEnable(GL_DEPTH_TEST);
 
   return 0;
 }
@@ -70,7 +71,7 @@ void render() {
   MStack_push(&render_context->matrix_stack, camera_transform);
 
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   GameRenderer_render(render_context);
 
