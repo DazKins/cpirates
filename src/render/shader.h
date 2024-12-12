@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-#include "../math/m.h"
+#include "math/m.h"
 
 typedef struct {
   GLuint gl_shader_program_id;

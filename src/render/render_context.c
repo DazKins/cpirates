@@ -1,6 +1,6 @@
 #include "render_context.h"
 
-#include "shader.h"
+#include "render/shader.h"
 
 RenderContext RenderContext_new() {
   RenderContext render_context;

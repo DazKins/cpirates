@@ -1,13 +1,15 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "../../math/v.h"
+#include "math/v.h"
+#include "util/id.h"
 
 typedef enum {
   EntityTypeShip,
 } EntityType;
 
 typedef struct {
+  Id id;
   EntityType type;
   V pos;
 } Entity;

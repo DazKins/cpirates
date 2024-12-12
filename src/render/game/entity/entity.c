@@ -1,6 +1,9 @@
 #include "entity.h"
-#include "entity_ship.h"
+
 #include <stdlib.h>
+
+#include "render/game/entity/entity_ship.h"
+#include "render/render_context.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
@@ -12,4 +15,8 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
     return (EntityRenderer *)entityRenderer;
   }
   }
+}
+
+void EntityRenderer_render(RenderContext *rc) {
+  
 }

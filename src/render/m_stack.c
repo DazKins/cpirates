@@ -1,4 +1,5 @@
 #include "m_stack.h"
+
 #include <stdio.h>
 
 struct mStack_node {

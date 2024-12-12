@@ -1,5 +1,6 @@
 #include "model_builder.h"
-#include "model.h"
+
+#include "render/model/model.h"
 
 ModelBuilder ModelBuilder_new() {
   ModelBuilder mb;

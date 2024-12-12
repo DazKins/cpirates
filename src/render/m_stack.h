@@ -1,7 +1,7 @@
 #ifndef MAT_STACK_H
 #define MAT_STACK_H
 
-#include "../math/m.h"
+#include "math/m.h"
 
 struct mStack_node;
 typedef struct mStack_node MStack_node;

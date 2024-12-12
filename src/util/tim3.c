@@ -1,3 +1,5 @@
+#include "tim3.h"
+
 #include <sys/time.h>
 #include <mach/mach_time.h>
 #include <time.h>
@@ -10,14 +12,12 @@ void init_mach_conversion_factor() {
   mach_conversion_factor = (double)info.numer / (double)info.denom;
 }
 
-void time_init() {
-  init_mach_conversion_factor();
-}
+void time_init() { init_mach_conversion_factor(); }
 
 long get_time_ns() {
   uint64_t mach_time = mach_absolute_time();
   double time_ns = (double)mach_time * mach_conversion_factor;
-  return (long)time_ns;;
+  return (long)time_ns;
 }
 
 void sleep_ns(long ns) {

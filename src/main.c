@@ -12,6 +12,7 @@
 #include "util/keys.h"
 #include "util/tim3.h"
 #include "render/window.h"
+#include "util/id.h"
 
 RenderContext *render_context;
 Camera *camera;

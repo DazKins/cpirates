@@ -1,5 +1,6 @@
 #include "ship_model.h"
-#include "model_builder.h"
+
+#include "render/model/model_builder.h"
 
 void ShipModel_build(ModelBuilder *model_builder) {
   float outer_length = 3.0f;

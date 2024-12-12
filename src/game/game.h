@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../util/list.h"
+#include "util/list.h"
 
 int Game_init();
 void Game_tick();

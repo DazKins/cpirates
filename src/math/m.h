@@ -1,8 +1,9 @@
 #ifndef MAT_H
 #define MAT_H
 
-#include "v.h"
 #include <stdlib.h>
+
+#include "math/v.h"
 
 typedef struct {
   size_t d;

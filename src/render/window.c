@@ -1,14 +1,14 @@
-#include "glad/glad.h"
 #include "window.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../util/input.h"
+#include "util/input.h"
+#include "glad/glad.h"
 
 static GLFWwindow *glfwWindow;
 static void (*window_size_callback)(int, int);
 static void (*cursor_pos_callback)(double, double);
-
 
 void glfw_window_size_callback(GLFWwindow *window, int width, int height) {
   if (!window_size_callback) {

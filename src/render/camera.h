@@ -1,8 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "../math/v.h"
-#include "../math/m.h"
+#include "math/v.h"
+#include "math/m.h"
 
 typedef struct {
   V pos;

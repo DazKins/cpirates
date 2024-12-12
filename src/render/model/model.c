@@ -1,6 +1,6 @@
-#include <glad/glad.h>
-
 #include "model.h"
+
+#include <glad/glad.h>
 
 const GLuint POSITION_ATTR_LOCATION = 0;
 const GLuint TEXCOORD_ATTR_LOCATION = 1;

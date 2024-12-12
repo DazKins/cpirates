@@ -1,8 +1,8 @@
+#include "texture.h"
+
 #include <png.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "texture.h"
 
 Texture Texture_load_from_image(const char *path) {
   FILE *file = fopen(path, "rb");

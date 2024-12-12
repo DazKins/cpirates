@@ -2,17 +2,23 @@
 
 #include <stdio.h>
 
-#include "../../game/entity/entity.h"
-#include "../../render/model/model.h"
-#include "../../render/shader.h"
-#include "../../render/model/model_builder.h"
-#include "../../render/model/ship_model.h"
-#include "../../render/texture.h"
-#include "../../util/file.h"
+#include "util/file.h"
+#include "util/id.h"
+#include "game/entity/entity.h"
+#include "render/model/model.h"
+#include "render/shader.h"
+#include "render/model/model_builder.h"
+#include "render/model/ship_model.h"
+#include "render/texture.h"
+#include "render/game/entity/entity.h"
 
 Model *model;
 Shader *shader;
 Texture *texture;
+
+#define MAX_ENTITY_RENDERERS 1000
+
+HashMap GameRenderer_entity_renderers;
 
 int GameRenderer_init() {
   const char *vertex_shader_source = load_file("res/shaders/shader.vert");
@@ -48,6 +54,8 @@ int GameRenderer_init() {
   texture = malloc(sizeof(Texture));
   *texture = Texture_load_from_image("res/img/texture.png");
 
+  GameRenderer_entity_renderers = HashMap_new(MAX_ENTITY_RENDERERS, sizeof(Id));
+
   return 0;
 }
 
@@ -59,6 +67,14 @@ void GameRenderer_render(RenderContext *render_context) {
   while (Iterator_has_next(&entities_iter)) {
     Entity *entity = Iterator_next(&entities_iter);
 
+    EntityRenderer *entity_renderer = HashMap_get(GameRenderer_entity_renderers, &entity->id);
+
+    if (entity_renderer == NULL) {
+      entity_renderer = EntityRenderer_new_ptr(entity);
+      HashMap_add(GameRenderer_entity_renderers, &entity->id, entity_renderer);
+    }
+
+    
   }
 
   RenderContext_render(render_context, model);

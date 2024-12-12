@@ -1,8 +1,9 @@
 #include "game.h"
 
-#include "../util/list.h"
-#include "entity/entity_ship.h"
 #include <stdlib.h>
+
+#include "util/list.h"
+#include "game/entity/entity_ship.h"
 
 List Game_entities;
 

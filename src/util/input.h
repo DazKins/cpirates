@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../math/v.h"
+#include "math/v.h"
 
 int Input_is_key_down(int key);
 V2 Input_get_mouse_pos();

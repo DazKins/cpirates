@@ -1,8 +1,10 @@
 #include "map.h"
-#include "hash.h"
+
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "util/hash.h"
 
 typedef struct {
   void *key;

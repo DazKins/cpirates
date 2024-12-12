@@ -1,7 +1,9 @@
 #include "camera.h"
-#include "../util/input.h"
-#include "../util/keys.h"
+
 #include <math.h>
+
+#include "util/input.h"
+#include "util/keys.h"
 
 Camera Camera_new(float aspect_ratio, float fov, float near, float far) {
   Camera camera;

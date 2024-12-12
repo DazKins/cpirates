@@ -1,8 +1,8 @@
 # Compiler
-CC = cc
+CC = clang
 
 # Compiler Flags
-COFLAGS = -DGL_SILENCE_DEPRECATION
+COFLAGS = -I./src -DGL_SILENCE_DEPRECATION
 CCFLAGS = -lpng -lglfw -framework OpenGL
 
 # Directories

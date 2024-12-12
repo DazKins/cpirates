@@ -1,7 +1,7 @@
 #ifndef ENTITY_SHIP_H
 #define ENTITY_SHIP_H
 
-#include "entity.h"
+#include "game/entity/entity.h"
 
 typedef struct {
   Entity base;

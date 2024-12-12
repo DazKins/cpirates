@@ -1,10 +1,10 @@
+#include "file.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "file.h"
-
-const char * load_file(const char * path) {
-  FILE * file = fopen(path, "r");
+const char *load_file(const char *path) {
+  FILE *file = fopen(path, "r");
   if (file == NULL) {
     return NULL;
   }
@@ -13,7 +13,7 @@ const char * load_file(const char * path) {
   long size = ftell(file);
   rewind(file);
 
-  char * buffer = malloc(size + 1);
+  char *buffer = malloc(size + 1);
   if (buffer == NULL) {
     return NULL;
   }

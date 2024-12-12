@@ -1,8 +1,8 @@
 #ifndef ENTITY_SHIP_RENDER_H
 #define ENTITY_SHIP_RENDER_H
 
-#include "../../../game/entity/entity_ship.h"
-#include "entity.h"
+#include "render/game/entity/entity.h"
+#include "game/entity/entity_ship.h"
 
 typedef struct {
   EntityRenderer base;
