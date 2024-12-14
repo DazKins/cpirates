@@ -5,8 +5,7 @@
 #include <stdlib.h>
 
 #include "math/m.h"
-#include "render/game/game.h"
-#include "render/camera.h"
+#include "render/game/game_renderer.h"
 #include "render/render_context.h"
 #include "util/input.h"
 #include "util/keys.h"
@@ -15,12 +14,11 @@
 #include "util/id.h"
 
 RenderContext *render_context;
-Camera *camera;
 
 void window_size_callback(int width, int height) {
   printf("Window resized to %dx%d\n", width, height);
 
-  camera->aspect_ratio = (float)width / height;
+  Game_camera.aspect_ratio = (float)width / height;
   glViewport(0, 0, width, height);
 }
 
@@ -43,9 +41,6 @@ int init() {
   render_context = malloc(sizeof(RenderContext));
   *render_context = RenderContext_new();
 
-  camera = malloc(sizeof(Camera));
-  *camera = Camera_new(1280.0f / 720.0f, M_PI / 2.0f, 0.01f, 100.0f);
-
   glEnable(GL_DEPTH_TEST);
 
   return 0;
@@ -56,8 +51,6 @@ int should_close = 0;
 void tick() {
   Input_tick();
 
-  Camera_process_input(camera);
-
   Game_tick();
 
   if (Input_is_key_down(KEY_ESCAPE)) {
@@ -67,9 +60,6 @@ void tick() {
 
 void render() {
   MStack_load_identity(&render_context->matrix_stack);
-
-  M camera_transform = Camera_get_transform(camera);
-  MStack_push(&render_context->matrix_stack, camera_transform);
 
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
