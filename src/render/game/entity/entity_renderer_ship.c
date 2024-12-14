@@ -1,4 +1,4 @@
-#include "entity_ship.h"
+#include "entity_renderer_ship.h"
 
 #include <stdio.h>
 
@@ -6,7 +6,7 @@
 #include "render/model/ship_model.h"
 
 EntityRendererShip EntityRendererShip_new(EntityShip *entity_ship) {
-  EntityRenderer base = {.entity = entity_ship};
+  EntityRenderer base = {.entity = (Entity *)entity_ship};
 
   ModelBuilder model_builder = ModelBuilder_new();
   ShipModel_build(&model_builder);
@@ -17,7 +17,7 @@ EntityRendererShip EntityRendererShip_new(EntityShip *entity_ship) {
 
 void EntityRendererShip_render(EntityRendererShip *entity_renderer_ship,
                                RenderContext *render_context) {
-  EntityShip *entity_ship = entity_renderer_ship->base.entity;
+  EntityShip *entity_ship = (EntityShip *)entity_renderer_ship->base.entity;
 
   MStack_push(&render_context->matrix_stack,
               M_Translate(entity_ship->base.pos));

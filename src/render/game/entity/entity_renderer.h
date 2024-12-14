@@ -1,5 +1,5 @@
-#ifndef ENTITY_RENDER_H
-#define ENTITY_RENDER_H
+#ifndef ENTITY_RENDERER_H
+#define ENTITY_RENDERER_H
 
 #include "game/entity/entity.h"
 #include "game/entity/entity.h"
@@ -16,4 +16,4 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity);
 
 void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *rc);
 
-#endif // !ENTITY_RENDER_H
+#endif // !ENTITY_RENDERER_H

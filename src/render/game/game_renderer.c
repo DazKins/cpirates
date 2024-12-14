@@ -1,4 +1,4 @@
-#include "game.h"
+#include "game_renderer.h"
 
 #include <stdio.h>
 
@@ -10,7 +10,7 @@
 #include "render/model/model_builder.h"
 #include "render/model/ship_model.h"
 #include "render/texture.h"
-#include "render/game/entity/entity.h"
+#include "render/game/entity/entity_renderer.h"
 
 Shader *shader;
 Texture *texture;

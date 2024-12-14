@@ -1,9 +1,9 @@
-#include "entity.h"
+#include "entity_renderer.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "render/game/entity/entity_ship.h"
+#include "render/game/entity/entity_renderer_ship.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
