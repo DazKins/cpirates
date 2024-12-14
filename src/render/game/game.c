@@ -12,7 +12,6 @@
 #include "render/texture.h"
 #include "render/game/entity/entity.h"
 
-Model *model;
 Shader *shader;
 Texture *texture;
 
@@ -45,12 +44,6 @@ int GameRenderer_init() {
 
   printf("Shader created\n");
 
-  ModelBuilder mb = ModelBuilder_new();
-
-  ShipModel_build(&mb);
-
-  model = ModelBuilder_build(&mb);
-
   texture = malloc(sizeof(Texture));
   *texture = Texture_load_from_image("res/img/texture.png");
 
@@ -67,15 +60,14 @@ void GameRenderer_render(RenderContext *render_context) {
   while (Iterator_has_next(&entities_iter)) {
     Entity *entity = Iterator_next(&entities_iter);
 
-    EntityRenderer *entity_renderer = HashMap_get(GameRenderer_entity_renderers, &entity->id);
+    EntityRenderer *entity_renderer =
+        HashMap_get(GameRenderer_entity_renderers, &entity->id);
 
     if (entity_renderer == NULL) {
       entity_renderer = EntityRenderer_new_ptr(entity);
       HashMap_add(GameRenderer_entity_renderers, &entity->id, entity_renderer);
     }
 
-    
+    EntityRenderer_render(entity_renderer, render_context);
   }
-
-  RenderContext_render(render_context, model);
 }

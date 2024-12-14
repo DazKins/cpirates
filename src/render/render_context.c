@@ -8,7 +8,7 @@ RenderContext RenderContext_new() {
   return render_context;
 }
 
-void RenderContext_render(const RenderContext *rc, const Model *m) {
+void RenderContext_render(RenderContext *rc, Model *m) {
   M cur_m = MStack_peek(rc->matrix_stack);
   Shader cur_shader = get_currently_bound_shader();
 

@@ -10,6 +10,6 @@ typedef struct {
 
 RenderContext RenderContext_new();
 
-void RenderContext_render(const RenderContext *rc, const Model *m);
+void RenderContext_render(RenderContext *rc, Model *m);
 
 #endif // !RENDER_CONTEXT_H

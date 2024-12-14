@@ -1,9 +1,9 @@
 #include "entity.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "render/game/entity/entity_ship.h"
-#include "render/render_context.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
@@ -14,9 +14,18 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
     *entityRenderer = EntityRendererShip_new((EntityShip *)entity);
     return (EntityRenderer *)entityRenderer;
   }
+  default: {
+    printf("no renderer for entity type %d\n", entity->type);
+    return NULL;
+  }
   }
 }
 
-void EntityRenderer_render(RenderContext *rc) {
-  
+void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *rc) {
+  switch (entity_renderer->entity->type) {
+  case EntityTypeShip: {
+    EntityRendererShip_render((EntityRendererShip *)entity_renderer, rc);
+    break;
+  }
+  }
 }
