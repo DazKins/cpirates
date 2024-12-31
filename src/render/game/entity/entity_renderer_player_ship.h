@@ -13,8 +13,4 @@ typedef struct {
 
 EntityRendererPlayerShip EntityRendererPlayerShip_new(EntityPlayerShip *entity_player_ship);
 
-void EntityRendererPlayerShip_render(
-    EntityRendererPlayerShip *entity_renderer_player_ship,
-    RenderContext *render_context);
-
 #endif // !ENTITY_RENDERER_PLAYER_SHIP_H

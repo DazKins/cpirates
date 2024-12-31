@@ -27,15 +27,6 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   }
 }
 
-void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *rc) {
-  switch (entity_renderer->entity->type) {
-  case EntityTypeShip: {
-    EntityRendererShip_render((EntityRendererShip *)entity_renderer, rc);
-    break;
-  }
-  case EntityTypePlayerShip: {
-    EntityRendererPlayerShip_render((EntityRendererPlayerShip *)entity_renderer, rc);
-    break;
-  }
-  }
+void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *render_context) {
+  entity_renderer->_renderFunc(entity_renderer, render_context);
 }
