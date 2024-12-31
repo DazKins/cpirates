@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #include "util/input.h"
@@ -35,8 +36,11 @@ int Game_init() {
 
 int i = 0;
 
-float az = 0.0f;
-float el = 0.0f;
+const float MAX_ELEVATION = 0.35f * M_PI;
+const float MIN_ELEVATION = 0.1f * M_PI;
+
+float azimuth = 0.0f;
+float elevation = 0.2f * M_PI;
 
 void Game_tick() {
   Iterator entities_iter = Iterator_new(&Game_entities);
@@ -46,19 +50,33 @@ void Game_tick() {
   }
 
   if (Input_is_key_down(KEY_UP)) {
-    el += 0.01f;
+    elevation += 0.01f;
   }
   if (Input_is_key_down(KEY_DOWN)) {
-    el -= 0.01f;
+    elevation -= 0.01f;
   }
   if (Input_is_key_down(KEY_LEFT)) {
-    az -= 0.01f;
+    azimuth -= 0.01f;
   }
   if (Input_is_key_down(KEY_RIGHT)) {
-    az += 0.01f;
+    azimuth += 0.01f;
   }
 
-  Camera_look_at(&Game_camera, player_ship->base.pos, 5.0f, az, el);
+  if (elevation > MAX_ELEVATION) {
+    elevation = MAX_ELEVATION;
+  }
+  if (elevation < MIN_ELEVATION) {
+    elevation = MIN_ELEVATION;
+  }
+
+  Camera_look_at(&Game_camera, player_ship->base.pos, 5.0f, azimuth, elevation);
+
+  V look_vector = Camera_get_look_vector(&Game_camera);
+  V push_vector = V_norm(V_set_y(look_vector, 0));
+
+  if (Input_is_key_down(KEY_W)) {
+    EntityPlayerShip_push(player_ship, push_vector, 0.01f);
+  }
 
   i++;
 

@@ -13,6 +13,7 @@ typedef struct _entity {
   Id id;
   EntityType type;
   V pos;
+  V vel;
 
   void (*_tickFunc)(struct _entity *entity);
 } Entity;

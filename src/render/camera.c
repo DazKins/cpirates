@@ -70,3 +70,11 @@ void Camera_look_at(Camera *camera, V pos, float dist, float azimuth, float elev
   camera->rot.y = -azimuth;
   camera->rot.z = 0;
 }
+
+V Camera_get_look_vector(Camera *camera) {
+  V look_vector;
+  look_vector.x = sin(camera->rot.y) * cos(camera->rot.x);
+  look_vector.y = sin(camera->rot.x);
+  look_vector.z = -cos(camera->rot.y) * cos(camera->rot.x);
+  return look_vector;
+}
