@@ -60,3 +60,13 @@ void Camera_process_input(Camera *camera) {
   camera->rot.y += Input_get_mouse_delta().x * 0.003f;
   camera->rot.x += Input_get_mouse_delta().y * 0.003f;
 }
+
+void Camera_look_at(Camera *camera, V pos, float dist, float azimuth, float elevation) {
+  camera->pos.x = pos.x + sin(azimuth) * cos(elevation) * dist;
+  camera->pos.y = pos.y + sin(elevation) * dist;
+  camera->pos.z = pos.z + cos(azimuth) * cos(elevation) * dist;
+
+  camera->rot.x = elevation;
+  camera->rot.y = -azimuth;
+  camera->rot.z = 0;
+}

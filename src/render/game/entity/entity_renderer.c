@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "render/game/entity/entity_renderer_ship.h"
+#include "render/game/entity/entity_renderer_player_ship.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
@@ -12,6 +13,11 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   case EntityTypeShip: {
     EntityRendererShip *entityRenderer = malloc(sizeof(EntityRendererShip));
     *entityRenderer = EntityRendererShip_new((EntityShip *)entity);
+    return (EntityRenderer *)entityRenderer;
+  }
+  case EntityTypePlayerShip: {
+    EntityRendererPlayerShip *entityRenderer = malloc(sizeof(EntityRendererPlayerShip));
+    *entityRenderer = EntityRendererPlayerShip_new((EntityPlayerShip *)entity);
     return (EntityRenderer *)entityRenderer;
   }
   default: {
@@ -25,6 +31,10 @@ void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *rc) {
   switch (entity_renderer->entity->type) {
   case EntityTypeShip: {
     EntityRendererShip_render((EntityRendererShip *)entity_renderer, rc);
+    break;
+  }
+  case EntityTypePlayerShip: {
+    EntityRendererPlayerShip_render((EntityRendererPlayerShip *)entity_renderer, rc);
     break;
   }
   }

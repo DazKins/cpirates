@@ -6,6 +6,7 @@
 
 typedef enum {
   EntityTypeShip,
+  EntityTypePlayerShip,
 } EntityType;
 
 typedef struct {
