@@ -9,10 +9,14 @@ typedef enum {
   EntityTypePlayerShip,
 } EntityType;
 
-typedef struct {
+typedef struct _entity {
   Id id;
   EntityType type;
   V pos;
+
+  void (*_tickFunc)(struct _entity *entity);
 } Entity;
+
+void Entity_tick(Entity *entity);
 
 #endif // !ENTITY_H

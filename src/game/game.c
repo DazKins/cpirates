@@ -39,7 +39,11 @@ float az = 0.0f;
 float el = 0.0f;
 
 void Game_tick() {
-  // Camera_process_input(&Game_camera);
+  Iterator entities_iter = Iterator_new(&Game_entities);
+  while (Iterator_has_next(&entities_iter)) {
+    Entity *entity = Iterator_next(&entities_iter);
+    Entity_tick(entity);
+  }
 
   if (Input_is_key_down(KEY_UP)) {
     el += 0.01f;

@@ -26,4 +26,6 @@ void EntityRendererPlayerShip_render(
               M_Translate(entity_player_ship->base.pos));
 
   RenderContext_render(render_context, entity_renderer_player_ship->model);
+
+  MStack_pop(&render_context->matrix_stack);
 }
