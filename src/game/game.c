@@ -77,6 +77,9 @@ void Game_tick() {
   if (Input_is_key_down(KEY_W)) {
     EntityPlayerShip_push(player_ship, push_vector, 0.01f);
   }
+  if (Input_is_key_down(KEY_S)) {
+    EntityPlayerShip_push(player_ship, V_neg(&push_vector), 0.01f);
+  }
 
   i++;
 
