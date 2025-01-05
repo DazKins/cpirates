@@ -2,9 +2,9 @@
 
 #include <stdio.h>
 
+#include "game/entity/component/component_position.h"
 #include "render/model/model_builder.h"
 #include "render/model/ship_model.h"
-#include "game/entity/component/component_position.h"
 
 void EntityRendererPlayerShip_render(EntityRenderer *entity_renderer,
                                      RenderContext *render_context) {
@@ -13,7 +13,8 @@ void EntityRendererPlayerShip_render(EntityRenderer *entity_renderer,
 
   Entity *entity = entity_renderer_player_ship->base.entity;
 
-  ComponentPosition *entity_component_position = Entity_get_component(entity, ComponentTypePosition);
+  ComponentPosition *entity_component_position =
+      Entity_get_component(entity, ComponentTypePosition);
   if (entity_component_position != NULL) {
     MStack_push(&render_context->matrix_stack,
                 M_Translate(entity_component_position->pos));
@@ -24,8 +25,7 @@ void EntityRendererPlayerShip_render(EntityRenderer *entity_renderer,
   MStack_pop(&render_context->matrix_stack);
 }
 
-EntityRendererPlayerShip
-EntityRendererPlayerShip_new(Entity *entity) {
+EntityRendererPlayerShip EntityRendererPlayerShip_new(Entity *entity) {
   EntityRenderer base = {.entity = entity};
 
   base._renderFunc = EntityRendererPlayerShip_render;

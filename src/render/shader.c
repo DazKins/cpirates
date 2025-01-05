@@ -1,8 +1,8 @@
 #include "shader.h"
 
 #include <glad/glad.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int create_individual_shader(const char *shader, GLenum type) {
   int shader_id = glCreateShader(type);

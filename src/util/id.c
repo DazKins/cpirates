@@ -1,8 +1,8 @@
 #include "id.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 #include "util/tim3.h"
 

@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 #include "math/v.h"
-#include "util/list.h"
 #include "model.h"
+#include "util/list.h"
 
 typedef struct {
   V _pos;

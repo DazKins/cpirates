@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "util/input.h"
 #include "glad/glad.h"
+#include "util/input.h"
 
 static GLFWwindow *glfwWindow;
 static void (*window_size_callback)(int, int);

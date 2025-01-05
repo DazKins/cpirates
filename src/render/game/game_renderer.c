@@ -2,15 +2,15 @@
 
 #include <stdio.h>
 
-#include "util/file.h"
-#include "util/id.h"
 #include "game/entity/entity.h"
+#include "render/game/entity/entity_renderer.h"
 #include "render/model/model.h"
-#include "render/shader.h"
 #include "render/model/model_builder.h"
 #include "render/model/ship_model.h"
+#include "render/shader.h"
 #include "render/texture.h"
-#include "render/game/entity/entity_renderer.h"
+#include "util/file.h"
+#include "util/id.h"
 
 Shader *shader;
 Texture *texture;

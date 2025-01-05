@@ -1,8 +1,8 @@
 #ifndef RENDER_CONTEXT_H
 #define RENDER_CONTEXT_H
 
-#include "render/model/model.h"
 #include "render/m_stack.h"
+#include "render/model/model.h"
 
 typedef struct {
   MStack matrix_stack;

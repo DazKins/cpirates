@@ -1,10 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "component/component.h"
 #include "math/v.h"
 #include "util/id.h"
 #include "util/list.h"
-#include "component/component.h"
 
 typedef enum {
   EntityTypeShip,

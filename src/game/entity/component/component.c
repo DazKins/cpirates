@@ -2,6 +2,4 @@
 
 #include <stdio.h>
 
-void Component_tick(Component *component) {
-  component->_tick_func(component);
-}
+void Component_tick(Component *component) { component->_tick_func(component); }

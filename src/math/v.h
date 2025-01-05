@@ -33,6 +33,6 @@ V V_norm(V v);
 
 V2 V2_sub(const V2 *a, const V2 *b);
 
-char* V_to_string(V v);
+char *V_to_string(V v);
 
 #endif // !VEC_H

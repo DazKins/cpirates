@@ -20,7 +20,8 @@ Camera Camera_new(float aspect_ratio, float fov, float near, float far) {
 }
 
 M Camera_get_transform(Camera *camera) {
-  M transform = M_perspective(camera->fov, camera->aspect_ratio, camera->near, camera->far);
+  M transform = M_perspective(camera->fov, camera->aspect_ratio, camera->near,
+                              camera->far);
   transform = M_mul(transform, M_RotX(-camera->rot.x));
   transform = M_mul(transform, M_RotY(-camera->rot.y));
   transform = M_mul(transform, M_RotZ(-camera->rot.z));
@@ -61,7 +62,8 @@ void Camera_process_input(Camera *camera) {
   camera->rot.x += Input_get_mouse_delta().y * 0.003f;
 }
 
-void Camera_look_at(Camera *camera, V pos, float dist, float azimuth, float elevation) {
+void Camera_look_at(Camera *camera, V pos, float dist, float azimuth,
+                    float elevation) {
   camera->pos.x = pos.x + sin(azimuth) * cos(elevation) * dist;
   camera->pos.y = pos.y + sin(elevation) * dist;
   camera->pos.z = pos.z + cos(azimuth) * cos(elevation) * dist;

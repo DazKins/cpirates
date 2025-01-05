@@ -1,15 +1,15 @@
 #include "game.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "util/input.h"
-#include "util/list.h"
-#include "util/keys.h"
 #include "entity/component/component_position.h"
 #include "entity/component/component_rigid_body.h"
 #include "entity/entity.h"
+#include "util/input.h"
+#include "util/keys.h"
+#include "util/list.h"
 
 List Game_entities;
 Camera Game_camera;

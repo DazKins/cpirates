@@ -1,7 +1,7 @@
 #include "tim3.h"
 
-#include <sys/time.h>
 #include <mach/mach_time.h>
+#include <sys/time.h>
 #include <time.h>
 
 static double mach_conversion_factor = 0.0;

@@ -1,10 +1,10 @@
 #include "entity_renderer.h"
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "render/game/entity/entity_renderer_ship.h"
 #include "render/game/entity/entity_renderer_player_ship.h"
+#include "render/game/entity/entity_renderer_ship.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
@@ -16,7 +16,8 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
     return (EntityRenderer *)entityRenderer;
   }
   case EntityTypePlayerShip: {
-    EntityRendererPlayerShip *entityRenderer = malloc(sizeof(EntityRendererPlayerShip));
+    EntityRendererPlayerShip *entityRenderer =
+        malloc(sizeof(EntityRendererPlayerShip));
     *entityRenderer = EntityRendererPlayerShip_new(entity);
     return (EntityRenderer *)entityRenderer;
   }
@@ -27,6 +28,7 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   }
 }
 
-void EntityRenderer_render(EntityRenderer *entity_renderer, RenderContext *render_context) {
+void EntityRenderer_render(EntityRenderer *entity_renderer,
+                           RenderContext *render_context) {
   entity_renderer->_renderFunc(entity_renderer, render_context);
 }

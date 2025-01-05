@@ -1,8 +1,8 @@
 #include "v.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 const V V_0 = {0.0f, 0.0f, 0.0f};
 
