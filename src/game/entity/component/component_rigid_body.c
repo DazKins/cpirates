@@ -1,5 +1,8 @@
 #include "component_rigid_body.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 void ComponentRigidBody_tick(Component *component) {
   ComponentRigidBody *component_rigid_body = (ComponentRigidBody *)component;
 
@@ -16,11 +19,11 @@ void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
       V_add(component_rigid_body->velocity, V_mul(push_direction, push_force));
 }
 
-ComponentRigidBody
-ComponentRigidBody_new(ComponentPosition *component_position) {
-  ComponentRigidBody component_rigid_body = {};
-  component_rigid_body.base.type = ComponentTypeRigidBody;
-  component_rigid_body.base._tick_func = ComponentRigidBody_tick;
-  component_rigid_body._component_position = component_position;
+ComponentRigidBody *
+ComponentRigidBody_new_ptr(ComponentPosition *component_position) {
+  ComponentRigidBody *component_rigid_body = malloc(sizeof(ComponentRigidBody));
+  component_rigid_body->base.type = ComponentTypeRigidBody;
+  component_rigid_body->base._tick_func = ComponentRigidBody_tick;
+  component_rigid_body->_component_position = component_position;
   return component_rigid_body;
 }

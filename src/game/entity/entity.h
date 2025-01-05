@@ -1,14 +1,13 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "component/component.h"
+#include "game/entity/component/component.h"
 #include "math/v.h"
 #include "util/id.h"
 #include "util/list.h"
 
 typedef enum {
   EntityTypeShip,
-  EntityTypePlayerShip,
 } EntityType;
 
 typedef struct _entity {
@@ -18,6 +17,7 @@ typedef struct _entity {
 } Entity;
 
 Entity Entity_new(EntityType type);
+Entity *Entity_new_ptr(EntityType type);
 
 void Entity_tick(Entity *entity);
 void Entity_add_component(Entity *entity, Component *component);

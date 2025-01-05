@@ -1,12 +1,19 @@
 #include "entity.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 Entity Entity_new(EntityType type) {
   Entity entity = {};
   entity.components = List_new();
   entity.type = type;
   entity.id = Id_new();
+  return entity;
+}
+
+Entity *Entity_new_ptr(EntityType type) {
+  Entity *entity = malloc(sizeof(Entity));
+  *entity = Entity_new(type);
   return entity;
 }
 

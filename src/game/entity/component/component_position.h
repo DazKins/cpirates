@@ -10,6 +10,6 @@ typedef struct {
   V pos;
 } ComponentPosition;
 
-ComponentPosition ComponentPosition_new();
+ComponentPosition *ComponentPosition_new_ptr();
 
 #endif // !POSITION_COMPONENT_H

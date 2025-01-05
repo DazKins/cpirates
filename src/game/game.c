@@ -7,6 +7,7 @@
 #include "entity/component/component_position.h"
 #include "entity/component/component_rigid_body.h"
 #include "entity/entity.h"
+#include "game/entity/entity_ship.h"
 #include "util/input.h"
 #include "util/keys.h"
 #include "util/list.h"
@@ -20,25 +21,11 @@ Entity *ship_0;
 int Game_init() {
   Game_entities = List_new();
 
-  player_ship = malloc(sizeof(Entity));
-  *player_ship = Entity_new(EntityTypePlayerShip);
-
-  ComponentPosition *component_position = malloc(sizeof(ComponentPosition));
-  *component_position = ComponentPosition_new();
-  Entity_add_component(player_ship, (Component *)component_position);
-
-  ComponentRigidBody *component_rigid_body = malloc(sizeof(ComponentRigidBody));
-  *component_rigid_body = ComponentRigidBody_new(component_position);
-  Entity_add_component(player_ship, (Component *)component_rigid_body);
+  player_ship = EntityShip_new_ptr();
 
   List_push(&Game_entities, player_ship);
 
-  ship_0 = malloc(sizeof(Entity));
-  *ship_0 = Entity_new(EntityTypeShip);
-
-  ComponentPosition *component_position_0 = malloc(sizeof(ComponentPosition));
-  *component_position_0 = ComponentPosition_new();
-  Entity_add_component(ship_0, (Component *)component_position_0);
+  ship_0 = EntityShip_new_ptr();
 
   List_push(&Game_entities, ship_0);
 

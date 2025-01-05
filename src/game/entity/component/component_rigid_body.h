@@ -11,8 +11,8 @@ typedef struct {
   V velocity;
 } ComponentRigidBody;
 
-ComponentRigidBody
-ComponentRigidBody_new(ComponentPosition *component_position);
+ComponentRigidBody *
+ComponentRigidBody_new_ptr(ComponentPosition *component_position);
 
 void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
                              V push_direction, float push_force);

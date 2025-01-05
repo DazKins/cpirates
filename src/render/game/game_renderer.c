@@ -68,9 +68,14 @@ void GameRenderer_render(RenderContext *render_context) {
 
     if (entity_renderer == NULL) {
       entity_renderer = EntityRenderer_new_ptr(entity);
-      HashMap_add(GameRenderer_entity_renderers, &entity->id, entity_renderer);
+      if (entity_renderer != NULL) {
+        HashMap_add(GameRenderer_entity_renderers, &entity->id,
+                    entity_renderer);
+      }
     }
 
-    EntityRenderer_render(entity_renderer, render_context);
+    if (entity_renderer != NULL) {
+      EntityRenderer_render(entity_renderer, render_context);
+    }
   }
 }
