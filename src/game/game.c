@@ -39,7 +39,7 @@ int i = 0;
 const float MAX_ELEVATION = 0.35f * M_PI;
 const float MIN_ELEVATION = 0.1f * M_PI;
 
-float azimuth = 0.0f;
+float azimuth = M_PI;
 float elevation = 0.2f * M_PI;
 
 void Game_tick() {
