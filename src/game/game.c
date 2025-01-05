@@ -94,4 +94,5 @@ void Game_tick() {
   ComponentPosition *ship_0_component_position =
       (ComponentPosition *)Entity_get_component(ship_0, ComponentTypePosition);
   ship_0_component_position->pos = V_new(2.0f + (float)i / 500.0f, 0.0f, 0.0f);
+  ship_0_component_position->rot = V_new(0.0f, 2.0f + (float)i / 500.0f, 0.0f);
 }

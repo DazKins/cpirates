@@ -8,6 +8,7 @@ typedef struct {
   Component base;
 
   V pos;
+  V rot;
 } ComponentPosition;
 
 ComponentPosition *ComponentPosition_new_ptr();

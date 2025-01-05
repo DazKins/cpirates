@@ -16,8 +16,13 @@ void EntityRendererShip_render(EntityRenderer *entity_renderer,
   ComponentPosition *entity_component_position =
       Entity_get_component(entity, ComponentTypePosition);
   if (entity_component_position != NULL) {
-    MStack_push(&render_context->matrix_stack,
-                M_Translate(entity_component_position->pos));
+    M transform = M_I(4);
+    transform = M_mul(transform, M_Translate(entity_component_position->pos));
+    transform = M_mul(transform, M_RotX(entity_component_position->rot.x));
+    transform = M_mul(transform, M_RotY(entity_component_position->rot.y));
+    transform = M_mul(transform, M_RotZ(entity_component_position->rot.z));
+
+    MStack_push(&render_context->matrix_stack, transform);
   }
 
   RenderContext_render(render_context, entity_renderer_ship->model);
