@@ -4,6 +4,7 @@
 typedef enum {
   ComponentTypePosition,
   ComponentTypeRigidBody,
+  ComponentTypeArtillery,
 } ComponentType;
 
 typedef struct _component {

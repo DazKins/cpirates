@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "entity/component/component_artillery.h"
 #include "entity/component/component_position.h"
 #include "entity/component/component_rigid_body.h"
 #include "entity/entity.h"
@@ -60,6 +61,11 @@ void Game_tick() {
   }
   if (Input_is_key_down(KEY_RIGHT)) {
     azimuth -= 0.01f;
+  }
+
+  if (Input_is_key_down(KEY_SPACE)) {
+    ComponentArtillery_fire((ComponentArtillery *)Entity_get_component(
+        player_ship, ComponentTypeArtillery));
   }
 
   if (elevation > MAX_ELEVATION) {
