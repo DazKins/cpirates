@@ -1,8 +1,8 @@
-#include "ship_model.h"
+#include "model_ship.h"
 
 #include "render/model/model_builder.h"
 
-void ShipModel_build(ModelBuilder *model_builder) {
+void ModelShip_build(ModelBuilder *model_builder) {
   float outer_length = 3.0f;
   float inner_length = 2.7f;
 
