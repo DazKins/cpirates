@@ -18,17 +18,6 @@ HashMap HashMap_new(uint64_t capacity, size_t key_size) {
   return (HashMap){._capacity = capacity, ._key_size = key_size, ._data = data};
 }
 
-void HashMap_tmp_check(HashMap h) {
-  int index = 0;
-
-  while (index < h._capacity) {
-    MapEntry *entry = h._data + index * sizeof(MapEntry);
-    // printf("%d: entry: %p\n", index, entry);
-    printf("%d: data key: %p\n", index, entry->key);
-    index++;
-  }
-}
-
 void HashMap_add(HashMap h, void *key, void *value) {
   uint64_t index = hash(key) % h._capacity;
   MapEntry *entry = h._data + index * sizeof(MapEntry);

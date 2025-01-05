@@ -12,12 +12,12 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   switch (entity->type) {
   case EntityTypeShip: {
     EntityRendererShip *entityRenderer = malloc(sizeof(EntityRendererShip));
-    *entityRenderer = EntityRendererShip_new((EntityShip *)entity);
+    *entityRenderer = EntityRendererShip_new(entity);
     return (EntityRenderer *)entityRenderer;
   }
   case EntityTypePlayerShip: {
     EntityRendererPlayerShip *entityRenderer = malloc(sizeof(EntityRendererPlayerShip));
-    *entityRenderer = EntityRendererPlayerShip_new((EntityPlayerShip *)entity);
+    *entityRenderer = EntityRendererPlayerShip_new(entity);
     return (EntityRenderer *)entityRenderer;
   }
   default: {

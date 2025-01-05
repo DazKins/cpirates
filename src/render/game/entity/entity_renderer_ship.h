@@ -2,7 +2,6 @@
 #define ENTITY_SHIP_RENDER_H
 
 #include "render/game/entity/entity_renderer.h"
-#include "game/entity/entity_ship.h"
 #include "render/render_context.h"
 
 typedef struct {
@@ -11,6 +10,6 @@ typedef struct {
   Model *model;
 } EntityRendererShip;
 
-EntityRendererShip EntityRendererShip_new(EntityShip *entity_ship);
+EntityRendererShip EntityRendererShip_new(Entity *entity);
 
 #endif // !ENTITY_SHIP_RENDER_H
