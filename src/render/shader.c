@@ -103,3 +103,8 @@ void Shader_set_uniform_m(const Shader *shader, const char *name, const M *m) {
   GLint location = glGetUniformLocation(shader->gl_shader_program_id, name);
   glUniformMatrix4fv(location, 1, GL_FALSE, m->data);
 }
+
+void Shader_set_uniform_f(const Shader *shader, const char *name, float f) {
+  GLint location = glGetUniformLocation(shader->gl_shader_program_id, name);
+  glUniform1f(location, f);
+}

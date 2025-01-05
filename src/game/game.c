@@ -56,10 +56,10 @@ void Game_tick() {
     elevation -= 0.01f;
   }
   if (Input_is_key_down(KEY_LEFT)) {
-    azimuth -= 0.01f;
+    azimuth += 0.01f;
   }
   if (Input_is_key_down(KEY_RIGHT)) {
-    azimuth += 0.01f;
+    azimuth -= 0.01f;
   }
 
   if (elevation > MAX_ELEVATION) {
