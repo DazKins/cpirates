@@ -2,12 +2,15 @@
 #define GAME_H
 
 #include "render/camera.h"
+#include "game/entity/entity.h"
 #include "util/list.h"
 
 int Game_init();
 void Game_tick();
 
-extern List Game_entities;
+void Game_add_entity(Entity *entity);
+List Game_get_entities();
+
 extern Camera Game_camera;
 
 #endif // !GAME_H

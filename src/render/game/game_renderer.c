@@ -90,7 +90,8 @@ void GameRenderer_render(RenderContext *render_context) {
   M camera_transform = Camera_get_transform(&Game_camera);
   MStack_push(&render_context->matrix_stack, camera_transform);
 
-  Iterator entities_iter = Iterator_new(&Game_entities);
+  List entities = Game_get_entities();
+  Iterator entities_iter = Iterator_new(&entities);
   while (Iterator_has_next(&entities_iter)) {
     Entity *entity = Iterator_next(&entities_iter);
 
