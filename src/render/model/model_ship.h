@@ -1,8 +1,8 @@
 #ifndef MODEL_SHIP_H
 #define MODEL_SHIP_H
 
-#include "render/model/model_builder.h"
+#include "model.h"
 
-void ModelShip_build(ModelBuilder *model_builder);
+Model *ModelShip_build();
 
 #endif // !MODEL_SHIP_H

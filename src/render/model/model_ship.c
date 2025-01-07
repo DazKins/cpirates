@@ -2,7 +2,15 @@
 
 #include "render/model/model_builder.h"
 
-void ModelShip_build(ModelBuilder *model_builder) {
+Model *model_ship;
+
+Model *ModelShip_build() {
+  if (model_ship != NULL) {
+    return model_ship;
+  }
+
+  ModelBuilder model_builder = ModelBuilder_new();
+
   float outer_length = 3.0f;
   float inner_length = 2.7f;
 
@@ -91,71 +99,73 @@ void ModelShip_build(ModelBuilder *model_builder) {
   V2 uv10 = V2_new(3 * tex_size, 0 * tex_size);
   V2 uv11 = V2_new(3 * tex_size, 1 * tex_size);
 
-  ModelBuilder_push_quad(model_builder, ibfl, uv00, ibfr, uv01, ibbr, uv11,
+  ModelBuilder_push_quad(&model_builder, ibfl, uv00, ibfr, uv01, ibbr, uv11,
                          ibbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, itfl, uv00, itfr, uv01, ibfr, uv11,
+  ModelBuilder_push_quad(&model_builder, itfl, uv00, itfr, uv01, ibfr, uv11,
                          ibfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, ibbl, uv00, ibbr, uv01, itbr, uv11,
+  ModelBuilder_push_quad(&model_builder, ibbl, uv00, ibbr, uv01, itbr, uv11,
                          itbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, itfl, uv00, itbl, uv01, ibbl, uv11,
+  ModelBuilder_push_quad(&model_builder, itfl, uv00, itbl, uv01, ibbl, uv11,
                          ibfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, itfr, uv00, itbr, uv01, ibbr, uv11,
+  ModelBuilder_push_quad(&model_builder, itfr, uv00, itbr, uv01, ibbr, uv11,
                          ibfr, uv10);
 
-  ModelBuilder_push_quad(model_builder, obfl, uv00, obfr, uv01, obbr, uv11,
+  ModelBuilder_push_quad(&model_builder, obfl, uv00, obfr, uv01, obbr, uv11,
                          obbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, otfl, uv00, otfr, uv01, obfr, uv11,
+  ModelBuilder_push_quad(&model_builder, otfl, uv00, otfr, uv01, obfr, uv11,
                          obfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, obbl, uv00, obbr, uv01, otbr, uv11,
+  ModelBuilder_push_quad(&model_builder, obbl, uv00, obbr, uv01, otbr, uv11,
                          otbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, otfl, uv00, otbl, uv01, obbl, uv11,
+  ModelBuilder_push_quad(&model_builder, otfl, uv00, otbl, uv01, obbl, uv11,
                          obfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, otfr, uv00, otbr, uv01, obbr, uv11,
+  ModelBuilder_push_quad(&model_builder, otfr, uv00, otbr, uv01, obbr, uv11,
                          obfr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_ibfl, uv00, over_ibfr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_ibfl, uv00, over_ibfr, uv01,
                          over_obfr, uv11, over_obfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_itfl, uv00, over_itfr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_itfl, uv00, over_itfr, uv01,
                          over_otfr, uv11, over_otfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_ibbl, uv00, over_ibfl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_ibbl, uv00, over_ibfl, uv01,
                          over_obfl, uv11, over_obbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_itbl, uv00, over_itfl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_itbl, uv00, over_itfl, uv01,
                          over_otfl, uv11, over_otbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_ibbr, uv00, over_ibbl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_ibbr, uv00, over_ibbl, uv01,
                          over_obbl, uv11, over_obbr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_itbr, uv00, over_itbl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_itbr, uv00, over_itbl, uv01,
                          over_otbl, uv11, over_otbr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_itfr, uv00, over_itbr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_itfr, uv00, over_itbr, uv01,
                          over_otbr, uv11, over_otfr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_ibfr, uv00, over_ibbr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_ibfr, uv00, over_ibbr, uv01,
                          over_obbr, uv11, over_obfr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_obfl, uv00, over_obfr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_obfl, uv00, over_obfr, uv01,
                          over_otfr, uv11, over_otfl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_obbl, uv00, over_obfl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_obbl, uv00, over_obfl, uv01,
                          over_otfl, uv11, over_otbl, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_obbr, uv00, over_obbl, uv01,
+  ModelBuilder_push_quad(&model_builder, over_obbr, uv00, over_obbl, uv01,
                          over_otbl, uv11, over_otbr, uv10);
 
-  ModelBuilder_push_quad(model_builder, over_otfr, uv00, over_otbr, uv01,
+  ModelBuilder_push_quad(&model_builder, over_otfr, uv00, over_otbr, uv01,
                          over_obbr, uv11, over_obfr, uv10);
 
-  return;
+  model_ship = ModelBuilder_build(&model_builder);
+
+  return model_ship;
 }

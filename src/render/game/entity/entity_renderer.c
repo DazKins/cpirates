@@ -3,16 +3,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "render/game/entity/entity_renderer_ship.h"
+#include "render/game/entity/entity_renderer_basic_model.h"
+#include "render/model/model_builder.h"
+#include "render/model/model_ship.h"
 
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
 
   switch (entity->type) {
   case EntityTypeShip: {
-    EntityRendererShip *entityRenderer = malloc(sizeof(EntityRendererShip));
-    *entityRenderer = EntityRendererShip_new(entity);
-    return (EntityRenderer *)entityRenderer;
+    EntityRendererBasicModel *entity_renderer =
+        malloc(sizeof(EntityRendererBasicModel));
+
+    Model *model_ship = ModelShip_build();
+
+    *entity_renderer = EntityRendererBasicModel_new(entity, model_ship);
+    return (EntityRenderer *)entity_renderer;
   }
   default: {
     printf("no renderer for entity type %d\n", entity->type);

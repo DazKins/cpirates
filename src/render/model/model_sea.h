@@ -1,8 +1,8 @@
 #ifndef MODEL_SEA_H
 #define MODEL_SEA_H
 
-#include "render/model/model_builder.h"
+#include "model.h"
 
-void ModelSea_build(ModelBuilder *model_builder);
+Model *ModelSea_build();
 
 #endif // !MODEL_SEA_H
