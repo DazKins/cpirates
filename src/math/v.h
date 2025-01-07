@@ -30,6 +30,8 @@ V V_set_y(V v, float y);
 V V_set_z(V v, float z);
 V V_neg(const V *v);
 V V_norm(V v);
+V V_clamp(V v, float min, float max);
+V V_wrap(V v, float min, float max);
 
 V2 V2_sub(const V2 *a, const V2 *b);
 

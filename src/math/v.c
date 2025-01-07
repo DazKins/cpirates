@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "math/num.h"
+
 const V V_0 = {0.0f, 0.0f, 0.0f};
 
 const V2 V2_0 = {0.0f, 0.0f};
@@ -52,6 +54,20 @@ V V_neg(const V *v) { return V_new(-v->x, -v->y, -v->z); }
 V V_norm(V v) {
   float mag = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
   return V_new(v.x / mag, v.y / mag, v.z / mag);
+}
+
+V V_clamp(V v, float min, float max) {
+  v.x = clamp(v.x, min, max);
+  v.y = clamp(v.y, min, max);
+  v.z = clamp(v.z, min, max);
+  return v;
+}
+
+V V_wrap(V v, float min, float max) {
+  v.x = wrap(v.x, min, max);
+  v.y = wrap(v.y, min, max);
+  v.z = wrap(v.z, min, max);
+  return v;
 }
 
 V2 V2_sub(const V2 *a, const V2 *b) { return V2_new(a->x - b->x, a->y - b->y); }
