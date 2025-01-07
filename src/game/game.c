@@ -18,6 +18,14 @@ Camera Game_camera;
 Entity *player_ship;
 Entity *ship_0;
 
+void Game_add_entity(Entity *entity) {
+  List_push(&_Game_entities, entity);
+}
+
+List Game_get_entities() {
+  return _Game_entities;
+}
+
 int Game_init() {
   _Game_entities = List_new();
 
@@ -30,14 +38,6 @@ int Game_init() {
   Game_camera = Camera_new(1280.0f / 720.0f, M_PI / 2.0f, 0.01f, 100.0f);
 
   return 0;
-}
-
-void Game_add_entity(Entity *entity) {
-  List_push(&_Game_entities, entity);
-}
-
-List Game_get_entities() {
-  return _Game_entities;
 }
 
 int i = 0;

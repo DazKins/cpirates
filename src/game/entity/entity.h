@@ -8,6 +8,7 @@
 
 typedef enum {
   EntityTypeShip,
+  EntityTypeCannonball,
 } EntityType;
 
 typedef struct _entity {

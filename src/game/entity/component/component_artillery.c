@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "game/game.h"
+#include "game/entity/entity_cannonball.h"
+
 ArtilleryFireResponse
 ComponentArtillery_fire(ComponentArtillery *component_artillery) {
   if (component_artillery->_currentCooldown > 0) {
@@ -10,6 +13,8 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
   }
 
   printf("firing...\n");
+
+  Game_add_entity(EntityCannonball_new_ptr());
 
   component_artillery->_currentCooldown = component_artillery->cooldown;
 
