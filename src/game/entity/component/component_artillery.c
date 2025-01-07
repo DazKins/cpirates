@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "game/game.h"
+#include "game/entity/component/component_rigid_body.h"
 #include "game/entity/entity_cannonball.h"
+#include "game/game.h"
 
 ArtilleryFireResponse
 ComponentArtillery_fire(ComponentArtillery *component_artillery) {
@@ -14,7 +15,23 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
 
   printf("firing...\n");
 
-  Game_add_entity(EntityCannonball_new_ptr());
+  ComponentPosition *component_position =
+      component_artillery->_component_position;
+  V pos = component_position->pos;
+
+  Entity *entity_cannonball = EntityCannonball_new_ptr();
+  ComponentPosition *entity_cannonball_component_position =
+      (ComponentPosition *)Entity_get_component(entity_cannonball,
+                                                ComponentTypePosition);
+  entity_cannonball_component_position->pos = pos;
+
+  ComponentRigidBody *entity_cannonball_component_rigid_body =
+      (ComponentRigidBody *)Entity_get_component(entity_cannonball,
+                                                 ComponentTypeRigidBody);
+  ComponentRigidBody_push(entity_cannonball_component_rigid_body,
+                          V_new(1.0f, 0.0f, 0.0f), 5.0f);
+
+  Game_add_entity(entity_cannonball);
 
   component_artillery->_currentCooldown = component_artillery->cooldown;
 
