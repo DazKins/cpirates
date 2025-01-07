@@ -17,6 +17,6 @@ Id Id_new() {
 
 char *Id_to_string(Id id) {
   char *str = malloc(33);
-  sprintf(str, "%016lx-%016lx", id._0, id._1);
+  sprintf(str, "%016llx-%016llx", id._0, id._1);
   return str;
 }

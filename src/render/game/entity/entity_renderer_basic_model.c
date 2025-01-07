@@ -7,14 +7,14 @@
 #include "render/model/model_ship.h"
 
 void EntityRendererBasicModel_render(EntityRenderer *entity_renderer,
-                               RenderContext *render_context) {
+                                     RenderContext *render_context) {
   EntityRendererBasicModel *entity_renderer_basic_model =
       (EntityRendererBasicModel *)entity_renderer;
 
   Entity *entity = entity_renderer_basic_model->base.entity;
 
   ComponentPosition *entity_component_position =
-      Entity_get_component(entity, ComponentTypePosition);
+      (ComponentPosition *)Entity_get_component(entity, ComponentTypePosition);
   if (entity_component_position != NULL) {
     M transform = M_I(4);
 
@@ -33,7 +33,8 @@ void EntityRendererBasicModel_render(EntityRenderer *entity_renderer,
   MStack_pop(&render_context->matrix_stack);
 }
 
-EntityRendererBasicModel EntityRendererBasicModel_new(Entity *entity, Model *model) {
+EntityRendererBasicModel EntityRendererBasicModel_new(Entity *entity,
+                                                      Model *model) {
   EntityRenderer base = {.entity = entity};
 
   base._renderFunc = EntityRendererBasicModel_render;
