@@ -91,27 +91,22 @@ void Game_tick() {
 
   if (Input_is_key_down(KEY_W)) {
     key_down = 1;
-    push_vector = V_add(push_vector, flat_facing_direction);
+    push_vector.x += flat_facing_direction.x;
+    push_vector.z += flat_facing_direction.z;
   }
   if (Input_is_key_down(KEY_S)) {
     key_down = 1;
-    push_vector = V_add(push_vector, V_neg(flat_facing_direction));
+    push_vector.x -= flat_facing_direction.x;
+    push_vector.z -= flat_facing_direction.z;
   }
   if (Input_is_key_down(KEY_A)) {
     key_down = 1;
-    float tmp_x = flat_facing_direction.x;
-    flat_facing_direction.x = flat_facing_direction.z;
-    flat_facing_direction.z = -tmp_x;
-
-    push_vector = V_add(push_vector, flat_facing_direction);
+    push_vector.x += flat_facing_direction.z;
+    push_vector.z += -flat_facing_direction.x;
   }
   if (Input_is_key_down(KEY_D)) {
-    key_down = 1;
-    float tmp_x = flat_facing_direction.x;
-    flat_facing_direction.x = -flat_facing_direction.z;
-    flat_facing_direction.z = tmp_x;
-
-    push_vector = V_add(push_vector, flat_facing_direction);
+    push_vector.x += -flat_facing_direction.z;
+    push_vector.z += flat_facing_direction.x;
   }
 
   if (key_down) {
