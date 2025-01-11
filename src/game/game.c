@@ -18,13 +18,9 @@ Camera Game_camera;
 Entity *player_ship;
 Entity *ship_0;
 
-void Game_add_entity(Entity *entity) {
-  List_push(&_Game_entities, entity);
-}
+void Game_add_entity(Entity *entity) { List_push(&_Game_entities, entity); }
 
-List Game_get_entities() {
-  return _Game_entities;
-}
+List Game_get_entities() { return _Game_entities; }
 
 int Game_init() {
   _Game_entities = List_new();
@@ -45,6 +41,7 @@ int i = 0;
 const float MAX_ELEVATION = 0.35f * M_PI;
 const float MIN_ELEVATION = 0.1f * M_PI;
 
+float dist = 10.0f;
 float azimuth = M_PI;
 float elevation = 0.2f * M_PI;
 
@@ -83,7 +80,7 @@ void Game_tick() {
   ComponentPosition *player_ship_component_position =
       (ComponentPosition *)Entity_get_component(player_ship,
                                                 ComponentTypePosition);
-  Camera_look_at(&Game_camera, player_ship_component_position->pos, 5.0f,
+  Camera_look_at(&Game_camera, player_ship_component_position->pos, dist,
                  azimuth, elevation);
 
   V look_vector = Camera_get_look_vector(&Game_camera);
@@ -98,12 +95,29 @@ void Game_tick() {
   }
   if (Input_is_key_down(KEY_S)) {
     ComponentRigidBody_push(player_ship_component_rigid_body,
-                            V_neg(&push_vector), 0.01f);
+                            V_neg(push_vector), 0.01f);
+  }
+  if (Input_is_key_down(KEY_A)) {
+    float tmp_x = push_vector.x;
+    push_vector.x = push_vector.z;
+    push_vector.z = -tmp_x;
+
+    ComponentRigidBody_push(player_ship_component_rigid_body, push_vector,
+                            0.01f);
+  }
+  if (Input_is_key_down(KEY_D)) {
+    float tmp_x = push_vector.x;
+    push_vector.x = -push_vector.z;
+    push_vector.z = tmp_x;
+
+    ComponentRigidBody_push(player_ship_component_rigid_body, push_vector,
+                            0.01f);
   }
 
   i++;
   ComponentPosition *ship_0_component_position =
       (ComponentPosition *)Entity_get_component(ship_0, ComponentTypePosition);
   ship_0_component_position->pos = V_new(2.0f + (float)i / 500.0f, 0.0f, 0.0f);
-  ComponentPosition_set_rot(ship_0_component_position, V_new(0.0f, 2.0f + (float)i / 500.0f, 0.0f));
+  ComponentPosition_set_rot(ship_0_component_position,
+                            V_new(0.0f, 2.0f + (float)i / 500.0f, 0.0f));
 }

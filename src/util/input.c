@@ -26,7 +26,7 @@ V2 Input_get_mouse_pos() { return mouse_pos; };
 int Input_is_key_down(int key) { return keys_down[key]; }
 
 void Input_tick() {
-  mouse_delta = V2_sub(&mouse_pos, &prev_mouse_pos);
+  mouse_delta = V2_sub(mouse_pos, prev_mouse_pos);
   prev_mouse_pos = mouse_pos;
 }
 

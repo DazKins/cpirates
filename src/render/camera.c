@@ -25,7 +25,7 @@ M Camera_get_transform(Camera *camera) {
   transform = M_mul(transform, M_RotX(-camera->rot.x));
   transform = M_mul(transform, M_RotY(-camera->rot.y));
   transform = M_mul(transform, M_RotZ(-camera->rot.z));
-  transform = M_mul(transform, M_Translate(V_neg(&camera->pos)));
+  transform = M_mul(transform, M_Translate(V_neg(camera->pos)));
   return transform;
 }
 

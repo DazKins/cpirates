@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "game/entity/component/component_rigid_body.h"
 #include "game/entity/entity_cannonball.h"
@@ -18,6 +19,7 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
   ComponentPosition *component_position =
       component_artillery->_component_position;
   V pos = component_position->pos;
+  V rot = ComponentPosition_get_rot(component_position);
 
   Entity *entity_cannonball = EntityCannonball_new_ptr();
   ComponentPosition *entity_cannonball_component_position =
@@ -29,7 +31,7 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
       (ComponentRigidBody *)Entity_get_component(entity_cannonball,
                                                  ComponentTypeRigidBody);
   ComponentRigidBody_push(entity_cannonball_component_rigid_body,
-                          V_new(1.0f, 0.0f, 0.0f), 1.0f);
+                          V_new(-cos(rot.y), 0.0f, -sin(rot.y)), 1.0f);
 
   Game_add_entity(entity_cannonball);
 

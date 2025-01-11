@@ -11,7 +11,7 @@ Model *ModelCannonball_build() {
 
   ModelBuilder model_builder = ModelBuilder_new();
 
-  float size = 0.2f;
+  float size = 0.4f;
   float half_size = size / 2.0f;
 
   float texSize = 16.0f / 512.0f;

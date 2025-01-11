@@ -15,7 +15,7 @@ const V2 V2_01 = {0.0f, 1.0f};
 const V2 V2_10 = {1.0f, 0.0f};
 const V2 V2_11 = {1.0f, 1.0f};
 
-V V_new(const float x, const float y, const float z) {
+V V_new(float x, float y, float z) {
   V v;
   v.x = x;
   v.y = y;
@@ -49,7 +49,7 @@ V V_set_z(V v, float z) {
   return v;
 }
 
-V V_neg(const V *v) { return V_new(-v->x, -v->y, -v->z); }
+V V_neg(V v) { return V_new(-v.x, -v.y, -v.z); }
 
 V V_norm(V v) {
   float mag = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
@@ -70,7 +70,7 @@ V V_wrap(V v, float min, float max) {
   return v;
 }
 
-V2 V2_sub(const V2 *a, const V2 *b) { return V2_new(a->x - b->x, a->y - b->y); }
+V2 V2_sub(V2 a, V2 b) { return V2_new(a.x - b.x, a.y - b.y); }
 
 char *V_to_string(V v) {
   char *str = malloc(64);
