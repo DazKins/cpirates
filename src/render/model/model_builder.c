@@ -68,6 +68,18 @@ void ModelBuilder_push_quad(ModelBuilder *mb, V v0, V2 uv0, V v1, V2 uv1, V v2,
   ModelBuilder_push_index(mb, i0);
 }
 
+void ModelBuilder_push_single_texture_cube(ModelBuilder *mb, V2 uv00, V2 uv01,
+                                           V2 uv10, V2 uv11, V v000, V v001,
+                                           V v010, V v011, V v100, V v101,
+                                           V v110, V v111) {
+  ModelBuilder_push_quad(mb, v000, uv00, v001, uv01, v011, uv11, v010, uv10);
+  ModelBuilder_push_quad(mb, v100, uv00, v101, uv01, v111, uv11, v110, uv10);
+  ModelBuilder_push_quad(mb, v000, uv00, v100, uv01, v110, uv11, v010, uv10);
+  ModelBuilder_push_quad(mb, v001, uv00, v101, uv01, v111, uv11, v011, uv10);
+  ModelBuilder_push_quad(mb, v000, uv00, v001, uv01, v101, uv11, v100, uv10);
+  ModelBuilder_push_quad(mb, v010, uv00, v011, uv01, v111, uv11, v110, uv10);
+}
+
 Model *ModelBuilder_build(ModelBuilder *mb) {
   V *positions = malloc(sizeof(V) * mb->_vertices_count);
 
