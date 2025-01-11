@@ -84,34 +84,42 @@ void Game_tick() {
                  azimuth, elevation);
 
   V look_vector = Camera_get_look_vector(&Game_camera);
-  V push_vector = V_norm(V_set_y(look_vector, 0));
+  V flat_facing_direction = V_norm(V_set_y(look_vector, 0.0f));
+  V push_vector = V_0;
 
-  ComponentRigidBody *player_ship_component_rigid_body =
-      (ComponentRigidBody *)Entity_get_component(player_ship,
-                                                 ComponentTypeRigidBody);
+  int key_down = 0;
+
   if (Input_is_key_down(KEY_W)) {
-    ComponentRigidBody_push(player_ship_component_rigid_body, push_vector,
-                            0.01f);
+    key_down = 1;
+    push_vector = V_add(push_vector, flat_facing_direction);
   }
   if (Input_is_key_down(KEY_S)) {
-    ComponentRigidBody_push(player_ship_component_rigid_body,
-                            V_neg(push_vector), 0.01f);
+    key_down = 1;
+    push_vector = V_add(push_vector, V_neg(flat_facing_direction));
   }
   if (Input_is_key_down(KEY_A)) {
-    float tmp_x = push_vector.x;
-    push_vector.x = push_vector.z;
-    push_vector.z = -tmp_x;
+    key_down = 1;
+    float tmp_x = flat_facing_direction.x;
+    flat_facing_direction.x = flat_facing_direction.z;
+    flat_facing_direction.z = -tmp_x;
 
-    ComponentRigidBody_push(player_ship_component_rigid_body, push_vector,
-                            0.01f);
+    push_vector = V_add(push_vector, flat_facing_direction);
   }
   if (Input_is_key_down(KEY_D)) {
-    float tmp_x = push_vector.x;
-    push_vector.x = -push_vector.z;
-    push_vector.z = tmp_x;
+    key_down = 1;
+    float tmp_x = flat_facing_direction.x;
+    flat_facing_direction.x = -flat_facing_direction.z;
+    flat_facing_direction.z = tmp_x;
 
-    ComponentRigidBody_push(player_ship_component_rigid_body, push_vector,
-                            0.01f);
+    push_vector = V_add(push_vector, flat_facing_direction);
+  }
+
+  if (key_down) {
+    ComponentRigidBody *player_ship_component_rigid_body =
+        (ComponentRigidBody *)Entity_get_component(player_ship,
+                                                   ComponentTypeRigidBody);
+    ComponentRigidBody_push(player_ship_component_rigid_body,
+                            V_norm(push_vector), 0.01f);
   }
 
   i++;
