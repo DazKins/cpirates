@@ -56,6 +56,8 @@ V V_norm(V v) {
   return V_new(v.x / mag, v.y / mag, v.z / mag);
 }
 
+int V_eq(V v0, V v1) { return v0.x == v1.x && v0.y == v1.y && v0.z == v1.z; }
+
 V V_clamp(V v, float min, float max) {
   v.x = clamp(v.x, min, max);
   v.y = clamp(v.y, min, max);

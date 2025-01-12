@@ -87,20 +87,15 @@ void Game_tick() {
   V flat_facing_direction = V_norm(V_set_y(look_vector, 0.0f));
   V push_vector = V_0;
 
-  int key_down = 0;
-
   if (Input_is_key_down(KEY_W)) {
-    key_down = 1;
     push_vector.x += flat_facing_direction.x;
     push_vector.z += flat_facing_direction.z;
   }
   if (Input_is_key_down(KEY_S)) {
-    key_down = 1;
     push_vector.x -= flat_facing_direction.x;
     push_vector.z -= flat_facing_direction.z;
   }
   if (Input_is_key_down(KEY_A)) {
-    key_down = 1;
     push_vector.x += flat_facing_direction.z;
     push_vector.z += -flat_facing_direction.x;
   }
@@ -109,7 +104,7 @@ void Game_tick() {
     push_vector.z += flat_facing_direction.x;
   }
 
-  if (key_down) {
+  if (!V_eq(push_vector, V_0)) {
     ComponentRigidBody *player_ship_component_rigid_body =
         (ComponentRigidBody *)Entity_get_component(player_ship,
                                                    ComponentTypeRigidBody);

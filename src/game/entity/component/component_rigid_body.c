@@ -6,7 +6,8 @@
 
 void ComponentRigidBody_tick(Component *component) {
   ComponentRigidBody *component_rigid_body = (ComponentRigidBody *)component;
-  ComponentPosition *component_position = component_rigid_body->_component_position;
+  ComponentPosition *component_position =
+      component_rigid_body->_component_position;
 
   component_position->pos =
       V_add(component_position->pos, component_rigid_body->velocity);
@@ -40,8 +41,11 @@ void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
 ComponentRigidBody *
 ComponentRigidBody_new_ptr(ComponentPosition *component_position) {
   ComponentRigidBody *component_rigid_body = malloc(sizeof(ComponentRigidBody));
-  component_rigid_body->base.type = ComponentTypeRigidBody;
-  component_rigid_body->base._tick_func = ComponentRigidBody_tick;
+
+  component_rigid_body->base =
+      Component_new(ComponentTypeRigidBody, ComponentRigidBody_tick);
+
   component_rigid_body->_component_position = component_position;
+  
   return component_rigid_body;
 }

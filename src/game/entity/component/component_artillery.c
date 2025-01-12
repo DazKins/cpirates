@@ -1,8 +1,8 @@
 #include "component_artillery.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "game/entity/component/component_rigid_body.h"
 #include "game/entity/entity_cannonball.h"
@@ -52,9 +52,12 @@ ComponentArtillery *
 ComponentArtillery_new_ptr(ComponentPosition *component_position,
                            int cooldown) {
   ComponentArtillery *component_artillery = malloc(sizeof(ComponentArtillery));
-  component_artillery->base.type = ComponentTypeArtillery;
+
+  component_artillery->base =
+      Component_new(ComponentTypeArtillery, ComponentArtillery_tick);
+
   component_artillery->_component_position = component_position;
-  component_artillery->base._tick_func = ComponentArtillery_tick;
   component_artillery->cooldown = cooldown;
+
   return component_artillery;
 }

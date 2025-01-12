@@ -30,6 +30,7 @@ V V_set_y(V v, float y);
 V V_set_z(V v, float z);
 V V_neg(V v);
 V V_norm(V v);
+int V_eq(V v0, V v1);
 V V_clamp(V v, float min, float max);
 V V_wrap(V v, float min, float max);
 
