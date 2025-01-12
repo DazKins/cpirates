@@ -14,7 +14,7 @@ BINDIR = bin
 BINRESDIR = $(BINDIR)/res
 
 # Target executable
-TARGET = $(BINDIR)/cCraft
+TARGET = $(BINDIR)/cpirates
 
 # Source files
 SOURCES = $(shell find ${SRCDIR} -name '*.c')
