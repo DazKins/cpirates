@@ -13,7 +13,7 @@ typedef struct {
   AABB aabb;
 } ComponentColider;
 
-ComponentColider *ComponentColider_new_ptr(ComponentPosition *component_position,
-                                           AABB aabb);
+ComponentColider *
+ComponentColider_new_ptr(ComponentPosition *component_position, AABB aabb);
 
 #endif // !COMPONENT_COLLIDER_H

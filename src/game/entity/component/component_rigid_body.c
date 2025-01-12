@@ -46,6 +46,6 @@ ComponentRigidBody_new_ptr(ComponentPosition *component_position) {
       Component_new(ComponentTypeRigidBody, ComponentRigidBody_tick);
 
   component_rigid_body->_component_position = component_position;
-  
+
   return component_rigid_body;
 }

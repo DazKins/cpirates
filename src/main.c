@@ -1,5 +1,5 @@
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,11 +7,11 @@
 #include "math/m.h"
 #include "render/game/game_renderer.h"
 #include "render/render_context.h"
+#include "render/window.h"
+#include "util/id.h"
 #include "util/input.h"
 #include "util/keys.h"
 #include "util/tim3.h"
-#include "render/window.h"
-#include "util/id.h"
 
 RenderContext *render_context;
 

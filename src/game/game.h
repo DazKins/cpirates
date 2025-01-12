@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "render/camera.h"
 #include "game/entity/entity.h"
+#include "render/camera.h"
 #include "util/list.h"
 
 int Game_init();

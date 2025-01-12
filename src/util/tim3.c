@@ -14,9 +14,7 @@ void init_mach_conversion_factor() {
 
 void time_init() { init_mach_conversion_factor(); }
 
-float get_time_s() {
-  return get_time_ns() / 1e9f;
-}
+float get_time_s() { return get_time_ns() / 1e9f; }
 
 long get_time_ns() {
   uint64_t mach_time = mach_absolute_time();

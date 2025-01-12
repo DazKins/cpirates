@@ -10,6 +10,7 @@ typedef struct {
   Model *model;
 } EntityRendererBasicModel;
 
-EntityRendererBasicModel EntityRendererBasicModel_new(Entity *entity, Model* model);
+EntityRendererBasicModel EntityRendererBasicModel_new(Entity *entity,
+                                                      Model *model);
 
 #endif // !ENTITY_SHIP_RENDER_H
