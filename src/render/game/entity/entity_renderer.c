@@ -51,7 +51,7 @@ void EntityRenderer_render(EntityRenderer *entity_renderer,
       (ComponentPosition *)Entity_get_component(entity_renderer->entity,
                                                 ComponentTypePosition);
   if (entity_component_position != NULL) {
-    DebugRender_point(entity_component_position->pos);
+    DebugRender_point(entity_component_position->pos, 0.2f);
   }
 #endif
 }

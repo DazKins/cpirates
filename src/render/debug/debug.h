@@ -3,6 +3,6 @@
 
 #include "math/v.h"
 
-void DebugRender_point(V v);
+void DebugRender_point(V v, float size);
 
 #endif // !RENDER_DEBUG_H

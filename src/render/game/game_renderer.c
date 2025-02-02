@@ -62,6 +62,4 @@ void GameRenderer_render(RenderContext *render_context) {
   }
 
   RenderContext_render(render_context, model_sea);
-
-  DebugRender_point(V_0);
 }

@@ -47,7 +47,7 @@ void debug_init() {
   _init = 1;
 }
 
-void DebugRender_point(V v) {
+void DebugRender_point(V v, float size) {
   debug_init();
 
   Shader_bind(*_debug_shader);
@@ -62,7 +62,7 @@ void DebugRender_point(V v) {
   Shader_set_uniform_v(_debug_shader, "debugColor", V_new(1.0f, 1.0f, 1.0f));
   Shader_set_uniform_m(_debug_shader, "mat", &m);
 
-  float half_size = 0.2f;
+  float half_size = size / 2.0f;
 
   V v1 = V_sub(V_sub(v, V_mul(right, half_size)), V_mul(up, half_size));
   V v2 = V_sub(V_add(v, V_mul(right, half_size)), V_mul(up, half_size));
