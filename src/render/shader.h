@@ -9,6 +9,10 @@ typedef struct {
   GLuint gl_shader_program_id;
 } Shader;
 
+extern Shader *Shader_default;
+
+int Shader_init();
+
 Shader Shader_new(const char *vertex_shader_source,
                   const char *fragment_shader_source);
 void Shader_bind(const Shader shader);

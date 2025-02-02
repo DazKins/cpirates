@@ -5,6 +5,7 @@
 
 #include "math/v.h"
 #include "model.h"
+#include "render/shader.h"
 #include "util/list.h"
 
 typedef struct {
@@ -17,12 +18,15 @@ typedef struct {
 
   size_t _vertices_count;
   size_t _indices_count;
+
+  Shader shader;
 } ModelBuilder;
 
 ModelBuilder ModelBuilder_new();
 
 void ModelBuilder_set_position(ModelBuilder *mb, V pos);
 void ModelBuilder_set_tex_coord(ModelBuilder *mb, V2 tex_coord);
+void ModelBuilder_set_shader(ModelBuilder *mb, Shader shader);
 
 unsigned int ModelBuilder_push_vertex(ModelBuilder *mb);
 

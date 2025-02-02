@@ -1,6 +1,10 @@
 #include "model_sea.h"
 
+#include <stdio.h>
+
 #include "render/model/model_builder.h"
+#include "render/shader.h"
+#include "util/file.h"
 
 Model *model_sea;
 
@@ -10,6 +14,33 @@ Model *ModelSea_build() {
   }
 
   ModelBuilder model_builder = ModelBuilder_new();
+
+  const char *sea_vertex_shader_source =
+      load_file("res/shaders/sea_shader.vert");
+
+  if (sea_vertex_shader_source == NULL) {
+    printf("failed to load sea vertex shader source\n");
+    return NULL;
+  }
+
+  const char *sea_fragment_shader_source =
+      load_file("res/shaders/sea_shader.frag");
+
+  if (sea_fragment_shader_source == NULL) {
+    printf("failed to load sea fragment shader source\n");
+    return NULL;
+  }
+
+  Shader *sea_shader = malloc(sizeof(Shader));
+  *sea_shader =
+      Shader_new(sea_vertex_shader_source, sea_fragment_shader_source);
+
+  if (sea_shader == NULL) {
+    printf("failed to create sea shader\n");
+    return NULL;
+  }
+
+  ModelBuilder_set_shader(&model_builder, *sea_shader);
 
   float size = 100.0f;
   int grid_resolution = 100;

@@ -7,7 +7,7 @@ const GLuint TEXCOORD_ATTR_LOCATION = 1;
 
 Model Model_new(const size_t vertex_count, const V *positions,
                 const V2 *tex_coords, const size_t index_count,
-                const unsigned int *indices) {
+                const unsigned int *indices, Shader shader) {
 
   float *raw_positions = malloc(sizeof(float) * vertex_count * 3);
 
@@ -64,12 +64,14 @@ Model Model_new(const size_t vertex_count, const V *positions,
 
   model._vao_id = vao;
   model._index_count = index_count;
+  model.shader = shader;
 
   return model;
 }
 
-void Model_render(const Model *buffer_object) {
-  glBindVertexArray(buffer_object->_vao_id);
-  glDrawElements(GL_TRIANGLES, buffer_object->_index_count, GL_UNSIGNED_INT, 0);
+void Model_render(const Model *model) {
+  Shader_bind(model->shader);
+  glBindVertexArray(model->_vao_id);
+  glDrawElements(GL_TRIANGLES, model->_index_count, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }

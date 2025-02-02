@@ -1,6 +1,7 @@
 #include "render_context.h"
 
 #include "render/shader.h"
+#include "util/tim3.h"
 
 RenderContext RenderContext_new() {
   RenderContext render_context;
@@ -10,9 +11,11 @@ RenderContext RenderContext_new() {
 
 void RenderContext_render(RenderContext *rc, Model *m) {
   M cur_m = MStack_peek(rc->matrix_stack);
-  Shader cur_shader = get_currently_bound_shader();
 
-  Shader_set_uniform_m(&cur_shader, "mat", &cur_m);
+  Shader_bind(m->shader);
+
+  Shader_set_uniform_m(&m->shader, "mat", &cur_m);
+  Shader_set_uniform_f(&m->shader, "time", get_time_s());
 
   Model_render(m);
 }

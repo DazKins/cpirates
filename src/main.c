@@ -23,12 +23,20 @@ void window_size_callback(int width, int height) {
 }
 
 int init() {
+#ifndef RELEASE
+  printf("Starting in debug mode...\n");
+#endif
+
   time_init();
 
-  Window_create(1280, 720, "Hello World");
+  Window_create(1280, 720, "cpirates");
 
   Window_set_window_size_callback(window_size_callback);
   Window_hide_cursor();
+
+  if (Shader_init() != 0) {
+    return 1;
+  }
 
   if (Game_init() != 0) {
     return 1;

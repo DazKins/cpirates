@@ -1,5 +1,7 @@
 #include "model_builder.h"
 
+#include <stdio.h>
+
 #include "render/model/model.h"
 
 ModelBuilder ModelBuilder_new() {
@@ -13,6 +15,9 @@ ModelBuilder ModelBuilder_new() {
 
   mb._pos = V_new(0.0f, 0.0f, 0.0f);
   mb._tex_coord = V2_new(0.0f, 0.0f);
+
+  mb.shader = *Shader_default;
+
   return mb;
 }
 
@@ -20,6 +25,10 @@ void ModelBuilder_set_position(ModelBuilder *mb, V pos) { mb->_pos = pos; }
 
 void ModelBuilder_set_tex_coord(ModelBuilder *mb, V2 tex_coord) {
   mb->_tex_coord = tex_coord;
+}
+
+void ModelBuilder_set_shader(ModelBuilder *mb, Shader shader) {
+  mb->shader = shader;
 }
 
 unsigned int ModelBuilder_push_vertex(ModelBuilder *mb) {
@@ -117,7 +126,7 @@ Model *ModelBuilder_build(ModelBuilder *mb) {
 
   Model *model = malloc(sizeof(Model));
   *model = Model_new(mb->_vertices_count, positions, tex_coords,
-                     mb->_indices_count, raw_indices);
+                     mb->_indices_count, raw_indices, mb->shader);
 
   return model;
 }

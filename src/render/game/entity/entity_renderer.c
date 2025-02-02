@@ -8,6 +8,11 @@
 #include "render/model/model_cannonball.h"
 #include "render/model/model_ship.h"
 
+#ifndef RELEASE
+#include "game/entity/component/component_position.h"
+#include "render/debug/debug.h"
+#endif
+
 EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
   EntityRenderer *entity_renderer;
 
@@ -40,4 +45,13 @@ EntityRenderer *EntityRenderer_new_ptr(Entity *entity) {
 void EntityRenderer_render(EntityRenderer *entity_renderer,
                            RenderContext *render_context) {
   entity_renderer->_renderFunc(entity_renderer, render_context);
+
+#ifndef RELEASE
+  ComponentPosition *entity_component_position =
+      (ComponentPosition *)Entity_get_component(entity_renderer->entity,
+                                                ComponentTypePosition);
+  if (entity_component_position != NULL) {
+    DebugRender_point(entity_component_position->pos);
+  }
+#endif
 }

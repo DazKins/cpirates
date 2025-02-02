@@ -4,6 +4,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "util/file.h"
+
+Shader *Shader_default;
+
+int Shader_init() {
+  const char *vertex_shader_source = load_file("res/shaders/shader.vert");
+
+  if (vertex_shader_source == NULL) {
+    printf("Failed to load vertex shader source\n");
+    return 1;
+  }
+
+  const char *fragment_shader_source = load_file("res/shaders/shader.frag");
+
+  if (fragment_shader_source == NULL) {
+    printf("failed to load fragment shader source\n");
+    return 1;
+  }
+
+  Shader_default = malloc(sizeof(Shader));
+  *Shader_default = Shader_new(vertex_shader_source, fragment_shader_source);
+
+  free(vertex_shader_source);
+  free(fragment_shader_source);
+
+  if (Shader_default == NULL) {
+    printf("failed to create default shader\n");
+    return 1;
+  }
+
+  return 0;
+}
+
 int create_individual_shader(const char *shader, GLenum type) {
   int shader_id = glCreateShader(type);
 

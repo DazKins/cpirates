@@ -1,6 +1,7 @@
 #include "model_ship.h"
 
 #include "render/model/model_builder.h"
+#include "render/shader.h"
 
 Model *model_ship;
 
