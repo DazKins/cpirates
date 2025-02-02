@@ -24,12 +24,14 @@ V V_new(float x, float y, float z);
 V2 V2_new(float x, float y);
 
 V V_add(V v0, V v1);
+V V_sub(V v0, V v1);
 V V_mul(V v, float a);
 V V_set_x(V v, float x);
 V V_set_y(V v, float y);
 V V_set_z(V v, float z);
 V V_neg(V v);
 V V_norm(V v);
+V V_cross(V v0, V v1);
 int V_eq(V v0, V v1);
 V V_clamp(V v, float min, float max);
 V V_wrap(V v, float min, float max);

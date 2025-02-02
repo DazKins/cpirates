@@ -93,6 +93,11 @@ void Shader_bind(const Shader shader) {
   cur_bound_gl_shader_program_id = shader.gl_shader_program_id;
 }
 
+void Shader_unbind() {
+  glUseProgram(0);
+  cur_bound_gl_shader_program_id = 0;
+}
+
 Shader get_currently_bound_shader() {
   Shader shader;
   shader.gl_shader_program_id = cur_bound_gl_shader_program_id;
@@ -102,6 +107,11 @@ Shader get_currently_bound_shader() {
 void Shader_set_uniform_m(const Shader *shader, const char *name, const M *m) {
   GLint location = glGetUniformLocation(shader->gl_shader_program_id, name);
   glUniformMatrix4fv(location, 1, GL_FALSE, m->data);
+}
+
+void Shader_set_uniform_v(const Shader *shader, const char *name, V v) {
+  GLint location = glGetUniformLocation(shader->gl_shader_program_id, name);
+  glUniform3f(location, v.x, v.y, v.z);
 }
 
 void Shader_set_uniform_f(const Shader *shader, const char *name, float f) {

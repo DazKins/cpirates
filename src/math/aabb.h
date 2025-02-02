@@ -11,5 +11,6 @@ AABB AABB_new(V min, V max);
 
 int AABB_contains(AABB aabb0, AABB aabb1);
 AABB AABB_translate(AABB aabb, V v);
+const char* AABB_to_string(AABB aabb);
 
 #endif // !AABB_H

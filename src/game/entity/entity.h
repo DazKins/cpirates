@@ -11,6 +11,8 @@ typedef enum {
   EntityTypeCannonball,
 } EntityType;
 
+const char* EntityType_to_string(EntityType type);
+
 typedef struct _entity {
   Id id;
   EntityType type;

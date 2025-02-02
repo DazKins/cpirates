@@ -13,6 +13,7 @@
 #include "util/file.h"
 #include "util/id.h"
 #include "util/tim3.h"
+#include "render/debug/debug.h"
 
 Shader *shader;
 Texture *texture;
@@ -116,4 +117,6 @@ void GameRenderer_render(RenderContext *render_context) {
   Shader_set_uniform_f(sea_shader, "time", get_time_s());
 
   RenderContext_render(render_context, model_sea);
+
+  DebugRender_point(V_0);
 }

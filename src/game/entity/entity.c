@@ -1,7 +1,18 @@
 #include "entity.h"
-
+  
 #include <stdio.h>
 #include <stdlib.h>
+
+const char *EntityType_to_string(EntityType type) {
+  switch (type) {
+  case EntityTypeShip:
+    return "ship";
+  case EntityTypeCannonball:
+    return "cannonball";
+  default:
+    return "{err}";
+  }
+}
 
 Entity Entity_new(EntityType type) {
   Entity entity = {};

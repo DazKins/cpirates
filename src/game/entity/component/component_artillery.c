@@ -14,8 +14,6 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
     return ArtilleryFireResponseCooldown;
   }
 
-  printf("firing...\n");
-
   ComponentPosition *component_position =
       component_artillery->_component_position;
   V pos = component_position->pos;

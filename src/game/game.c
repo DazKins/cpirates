@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "entity/component/component_artillery.h"
+#include "entity/component/component_collider.h"
 #include "entity/component/component_position.h"
 #include "entity/component/component_rigid_body.h"
 #include "game/entity/entity_ship.h"
@@ -36,6 +37,49 @@ int Game_init() {
   return 0;
 }
 
+void Game_handle_entity_collisions() {
+  // just iterate over all entities for now, will need spatial optimisation in
+  // future
+  Iterator entities_iter_0 = Iterator_new(&_Game_entities);
+  while (Iterator_has_next(&entities_iter_0)) {
+    Entity *entity_0 = Iterator_next(&entities_iter_0);
+
+    ComponentCollider *component_collider_0 =
+        (ComponentCollider *)Entity_get_component(entity_0,
+                                                  ComponentTypeCollider);
+
+    if (component_collider_0 == NULL)
+      continue;
+
+    AABB aabb_0 = ComponentCollider_get_aabb(component_collider_0);
+
+    Iterator entities_iter_1 = Iterator_new(&_Game_entities);
+    while (Iterator_has_next(&entities_iter_1)) {
+      Entity *entity_1 = Iterator_next(&entities_iter_1);
+
+      if (entity_0 == entity_1)
+        continue;
+
+      ComponentCollider *component_collider_1 =
+          (ComponentCollider *)Entity_get_component(entity_1,
+                                                    ComponentTypeCollider);
+
+      if (component_collider_1 == NULL)
+        continue;
+
+      AABB aabb_1 = ComponentCollider_get_aabb(component_collider_1);
+
+      if (AABB_contains(aabb_0, aabb_1)) {
+        printf("entity 0: %s, entity 1: %s\n", Id_to_string(entity_0->id),
+               Id_to_string(entity_1->id));
+        printf("aabb 0: %s, aabb 1: %s\n", AABB_to_string(aabb_0),
+               AABB_to_string(aabb_1));
+        ComponentCollider_on_collide(component_collider_0, entity_1);
+      }
+    }
+  }
+}
+
 int i = 0;
 
 const float MAX_ELEVATION = 0.35f * M_PI;
@@ -51,6 +95,8 @@ void Game_tick() {
     Entity *entity = Iterator_next(&entities_iter);
     Entity_tick(entity);
   }
+
+  Game_handle_entity_collisions();
 
   if (Input_is_key_down(KEY_UP)) {
     elevation += 0.01f;
