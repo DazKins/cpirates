@@ -34,7 +34,6 @@ void MStack_pop(MStack *ms) {
   ms->head = old_head->next;
 
   free(old_head);
-  M_free(m);
 }
 
 const M MStack_peek(MStack ms) { return ms.head->m; }
@@ -43,7 +42,6 @@ void MStack_node_free(MStack_node *node) {
   if (node->next != NULL) {
     MStack_node_free(node->next);
   }
-  M_free(node->m);
   free(node);
 }
 
