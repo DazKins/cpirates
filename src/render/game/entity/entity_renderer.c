@@ -47,19 +47,19 @@ void EntityRenderer_render(EntityRenderer *entity_renderer,
                            RenderContext *render_context) {
   entity_renderer->_renderFunc(entity_renderer, render_context);
 
-// #ifndef RELEASE
-//   ComponentPosition *entity_component_position =
-//       (ComponentPosition *)Entity_get_component(entity_renderer->entity,
-//                                                 ComponentTypePosition);
-//   if (entity_component_position != NULL) {
-//     DebugRender_point(entity_component_position->pos, 0.2f);
-//   }
+#ifndef RELEASE
+  ComponentPosition *entity_component_position =
+      (ComponentPosition *)Entity_get_component(entity_renderer->entity,
+                                                ComponentTypePosition);
+  if (entity_component_position != NULL) {
+    DebugRender_point(entity_component_position->pos, 0.2f);
+  }
 
-//   ComponentCollider *entity_component_collider =
-//       (ComponentCollider *)Entity_get_component(entity_renderer->entity,
-//                                                 ComponentTypeCollider);
-//   if (entity_component_collider != NULL) {
-//     DebugRender_obb(ComponentCollider_get_obb(entity_component_collider));
-//   }
-// #endif
+  ComponentCollider *entity_component_collider =
+      (ComponentCollider *)Entity_get_component(entity_renderer->entity,
+                                                ComponentTypeCollider);
+  if (entity_component_collider != NULL) {
+    DebugRender_obb(ComponentCollider_get_obb(entity_component_collider));
+  }
+#endif
 }
