@@ -143,7 +143,7 @@ void Game_tick() {
   if (!V_eq(push_vector, V_0)) {
     ComponentRigidBody *player_ship_component_rigid_body =
         (ComponentRigidBody *)Entity_get_component(player_ship, ComponentTypeRigidBody);
-    ComponentRigidBody_push(player_ship_component_rigid_body, V_norm(push_vector), 0.01f);
+    ComponentRigidBody_push(player_ship_component_rigid_body, V_norm(push_vector), 0.002f);
   }
 
   i++;

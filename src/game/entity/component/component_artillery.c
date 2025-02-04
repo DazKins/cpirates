@@ -29,7 +29,7 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
       (ComponentRigidBody *)Entity_get_component(entity_cannonball,
                                                  ComponentTypeRigidBody);
   ComponentRigidBody_push(entity_cannonball_component_rigid_body,
-                          V_new(-cos(rot.y), 0.0f, -sin(rot.y)), 1.0f);
+                          V_new(-cos(rot.y), 0.0f, -sin(rot.y)), 0.4f);
 
   Game_add_entity(entity_cannonball);
 

@@ -29,7 +29,7 @@ void ComponentRigidBody_tick(Component *component) {
 
   ComponentPosition_set_rot(component_position, rot);
 
-  component_rigid_body->velocity = V_mul(component_rigid_body->velocity, 0.9f);
+  component_rigid_body->velocity = V_mul(component_rigid_body->velocity, 0.98f);
 }
 
 void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
