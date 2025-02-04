@@ -27,5 +27,6 @@ Iterator Iterator_new(List *list);
 
 int Iterator_has_next(Iterator *it);
 void *Iterator_next(Iterator *it);
+void Iterator_free(Iterator *it);
 
 #endif // !LIST_H

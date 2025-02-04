@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "game/entity/entity.h"
+#include "render/debug/debug.h"
 #include "render/game/entity/entity_renderer.h"
 #include "render/model/model.h"
 #include "render/model/model_builder.h"
@@ -13,7 +14,6 @@
 #include "util/file.h"
 #include "util/id.h"
 #include "util/tim3.h"
-#include "render/debug/debug.h"
 
 Texture *texture;
 
@@ -40,6 +40,8 @@ void GameRenderer_render(RenderContext *render_context) {
   M camera_transform = Camera_get_transform(&Game_camera);
   MStack_push(&render_context->matrix_stack, camera_transform);
 
+  RenderContext_render(render_context, model_sea);
+
   List entities = Game_get_entities();
   Iterator entities_iter = Iterator_new(&entities);
   while (Iterator_has_next(&entities_iter)) {
@@ -60,6 +62,4 @@ void GameRenderer_render(RenderContext *render_context) {
       EntityRenderer_render(entity_renderer, render_context);
     }
   }
-
-  RenderContext_render(render_context, model_sea);
 }

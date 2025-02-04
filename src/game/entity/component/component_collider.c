@@ -4,25 +4,31 @@
 
 ComponentCollider *
 ComponentCollider_new_ptr(ComponentPosition *component_position,
-                          void (*on_collide_func)(Entity *entity), AABB aabb) {
+                          void (*on_collide_func)(Entity *entity), OBB obb) {
   ComponentCollider *component_collider = malloc(sizeof(ComponentCollider));
 
   component_collider->base = Component_new(ComponentTypeCollider, NULL);
 
   component_collider->_component_position = component_position;
   component_collider->_on_collide_func = on_collide_func;
-  component_collider->_aabb = aabb;
+  component_collider->_obb = obb;
 
   return component_collider;
 }
 
-AABB ComponentCollider_get_aabb(ComponentCollider *component_collider) {
-  ComponentPosition *component_position =
-      component_collider->_component_position;
+OBB ComponentCollider_get_obb(ComponentCollider *component_collider) {
+  ComponentPosition *component_position = component_collider->_component_position;
+  OBB obb = component_collider->_obb;
+  
+  // Rotate the OBB using the rotation value from ComponentPosition.
+  // Here we assume 'rot' is a float (in radians) in ComponentPosition and we rotate about the Y-axis.
+  V rot = ComponentPosition_get_rot(component_position);
 
-  AABB aabb = component_collider->_aabb;
-
-  return AABB_translate(aabb, component_position->pos);
+  obb = OBB_rotate(obb, rot.x, V_new(1.0f, 0.0f, 0.0f));
+  obb = OBB_rotate(obb, rot.y, V_new(0.0f, 1.0f, 0.0f));
+  obb = OBB_rotate(obb, rot.z, V_new(0.0f, 0.0f, 1.0f));
+  
+  return OBB_translate(obb, component_position->pos);
 }
 
 void ComponentCollider_on_collide(ComponentCollider *component_collider,

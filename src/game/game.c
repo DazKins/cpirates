@@ -38,42 +38,35 @@ int Game_init() {
 }
 
 void Game_handle_entity_collisions() {
-  // just iterate over all entities for now, will need spatial optimisation in
-  // future
+  // Just iterate over all entities for now; spatial optimisation can be added in the future.
   Iterator entities_iter_0 = Iterator_new(&_Game_entities);
   while (Iterator_has_next(&entities_iter_0)) {
     Entity *entity_0 = Iterator_next(&entities_iter_0);
 
     ComponentCollider *component_collider_0 =
-        (ComponentCollider *)Entity_get_component(entity_0,
-                                                  ComponentTypeCollider);
-
+        (ComponentCollider *)Entity_get_component(entity_0, ComponentTypeCollider);
     if (component_collider_0 == NULL)
       continue;
 
-    AABB aabb_0 = ComponentCollider_get_aabb(component_collider_0);
+    // Get the oriented bounding box for the first entity.
+    OBB obb_0 = ComponentCollider_get_obb(component_collider_0);
 
     Iterator entities_iter_1 = Iterator_new(&_Game_entities);
     while (Iterator_has_next(&entities_iter_1)) {
       Entity *entity_1 = Iterator_next(&entities_iter_1);
-
       if (entity_0 == entity_1)
         continue;
-
+      
       ComponentCollider *component_collider_1 =
-          (ComponentCollider *)Entity_get_component(entity_1,
-                                                    ComponentTypeCollider);
-
+          (ComponentCollider *)Entity_get_component(entity_1, ComponentTypeCollider);
       if (component_collider_1 == NULL)
         continue;
 
-      AABB aabb_1 = ComponentCollider_get_aabb(component_collider_1);
+      // Get the oriented bounding box for the second entity.
+      OBB obb_1 = ComponentCollider_get_obb(component_collider_1);
 
-      if (AABB_contains(aabb_0, aabb_1)) {
-        printf("entity 0: %s, entity 1: %s\n", Id_to_string(entity_0->id),
-               Id_to_string(entity_1->id));
-        printf("aabb 0: %s, aabb 1: %s\n", AABB_to_string(aabb_0),
-               AABB_to_string(aabb_1));
+      // Check for collision using the Separating Axis Theorem.
+      if (OBB_intersects(obb_0, obb_1)) {
         ComponentCollider_on_collide(component_collider_0, entity_1);
       }
     }
@@ -112,8 +105,7 @@ void Game_tick() {
   }
 
   if (Input_is_key_down(KEY_SPACE)) {
-    ComponentArtillery_fire((ComponentArtillery *)Entity_get_component(
-        player_ship, ComponentTypeArtillery));
+    ComponentArtillery_fire((ComponentArtillery *)Entity_get_component(player_ship, ComponentTypeArtillery));
   }
 
   if (elevation > MAX_ELEVATION) {
@@ -124,10 +116,8 @@ void Game_tick() {
   }
 
   ComponentPosition *player_ship_component_position =
-      (ComponentPosition *)Entity_get_component(player_ship,
-                                                ComponentTypePosition);
-  Camera_look_at(&Game_camera, player_ship_component_position->pos, dist,
-                 azimuth, elevation);
+      (ComponentPosition *)Entity_get_component(player_ship, ComponentTypePosition);
+  Camera_look_at(&Game_camera, player_ship_component_position->pos, dist, azimuth, elevation);
 
   V look_vector = Camera_get_look_vector(&Game_camera);
   V flat_facing_direction = V_norm(V_set_y(look_vector, 0.0f));
@@ -152,16 +142,13 @@ void Game_tick() {
 
   if (!V_eq(push_vector, V_0)) {
     ComponentRigidBody *player_ship_component_rigid_body =
-        (ComponentRigidBody *)Entity_get_component(player_ship,
-                                                   ComponentTypeRigidBody);
-    ComponentRigidBody_push(player_ship_component_rigid_body,
-                            V_norm(push_vector), 0.01f);
+        (ComponentRigidBody *)Entity_get_component(player_ship, ComponentTypeRigidBody);
+    ComponentRigidBody_push(player_ship_component_rigid_body, V_norm(push_vector), 0.01f);
   }
 
   i++;
   ComponentPosition *ship_0_component_position =
       (ComponentPosition *)Entity_get_component(ship_0, ComponentTypePosition);
   ship_0_component_position->pos = V_new(2.0f + (float)i / 500.0f, 0.0f, 0.0f);
-  ComponentPosition_set_rot(ship_0_component_position,
-                            V_new(0.0f, 2.0f + (float)i / 500.0f, 0.0f));
+  ComponentPosition_set_rot(ship_0_component_position, V_new(0.0f, 2.0f + (float)i / 500.0f, 0.0f));
 }

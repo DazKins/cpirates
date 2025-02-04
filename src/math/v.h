@@ -8,6 +8,10 @@ typedef struct {
 } V;
 
 extern const V V_0;
+extern const V V_xyz;
+extern const V V_x;
+extern const V V_y;
+extern const V V_z;
 
 typedef struct {
   float x;
@@ -35,6 +39,7 @@ V V_cross(V v0, V v1);
 int V_eq(V v0, V v1);
 V V_clamp(V v, float min, float max);
 V V_wrap(V v, float min, float max);
+float V_dot(V v0, V v1);
 
 V2 V2_sub(V2 a, V2 b);
 

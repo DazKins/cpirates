@@ -13,7 +13,7 @@ typedef struct {
 MStack MStack_new();
 
 void MStack_push(MStack *ms, const M m);
-const M MStack_pop(MStack *ms);
+void MStack_pop(MStack *ms);
 const M MStack_peek(MStack ms);
 void MStack_load_identity(MStack *ms);
 

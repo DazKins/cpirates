@@ -27,15 +27,14 @@ void MStack_push(MStack *ms, const M m) {
   ms->head = new_head;
 }
 
-const M MStack_pop(MStack *ms) {
+void MStack_pop(MStack *ms) {
   MStack_node *old_head = ms->head;
   const M m = old_head->m;
 
   ms->head = old_head->next;
 
   free(old_head);
-
-  return m;
+  M_free(m);
 }
 
 const M MStack_peek(MStack ms) { return ms.head->m; }

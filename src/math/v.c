@@ -7,6 +7,10 @@
 #include "math/num.h"
 
 const V V_0 = {0.0f, 0.0f, 0.0f};
+const V V_xyz = {1.0f, 1.0f, 1.0f};
+const V V_x = {1.0f, 0.0f, 0.0f};
+const V V_y = {0.0f, 1.0f, 0.0f};
+const V V_z = {0.0f, 0.0f, 1.0f};
 
 const V2 V2_0 = {0.0f, 0.0f};
 
@@ -77,6 +81,10 @@ V V_wrap(V v, float min, float max) {
   v.y = wrap(v.y, min, max);
   v.z = wrap(v.z, min, max);
   return v;
+}
+
+float V_dot(V v0, V v1) {
+  return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 }
 
 V2 V2_sub(V2 a, V2 b) { return V2_new(a.x - b.x, a.y - b.y); }
