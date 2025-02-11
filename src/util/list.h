@@ -18,6 +18,8 @@ List List_new();
 
 void List_push(List *list, void *data);
 void List_free(List list);
+void List_remove(List *list, void *data);
+void List_clear(List *list);
 
 typedef struct {
   _ListNode *current;
@@ -27,6 +29,5 @@ Iterator Iterator_new(List *list);
 
 int Iterator_has_next(Iterator *it);
 void *Iterator_next(Iterator *it);
-void Iterator_free(Iterator *it);
 
 #endif // !LIST_H

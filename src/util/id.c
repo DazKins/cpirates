@@ -20,3 +20,7 @@ char *Id_to_string(Id id) {
   sprintf(str, "%016llx-%016llx", id._0, id._1);
   return str;
 }
+
+int Id_eq(Id a, Id b) {
+  return a._0 == b._0 && a._1 == b._1;
+}

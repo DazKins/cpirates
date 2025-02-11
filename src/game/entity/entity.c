@@ -25,6 +25,7 @@ Entity Entity_new(EntityType type) {
 Entity *Entity_new_ptr(EntityType type) {
   Entity *entity = malloc(sizeof(Entity));
   *entity = Entity_new(type);
+  entity->metadata = HashMap_new(10, sizeof(Id));
   return entity;
 }
 

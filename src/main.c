@@ -8,6 +8,8 @@
 #include "render/game/game_renderer.h"
 #include "render/render_context.h"
 #include "render/window.h"
+#include "util/config.h"
+#include "util/log.h"
 #include "util/id.h"
 #include "util/input.h"
 #include "util/keys.h"
@@ -23,31 +25,59 @@ void window_size_callback(int width, int height) {
 }
 
 int init() {
-#ifndef RELEASE
-  printf("Starting in debug mode...\n");
-#endif
+  Config_init();
+
+  if (Config_debug) {
+    printf("Starting in debug mode...\n");
+  }
+
+  Log_trace("Trace enabled");
+
+  Log_trace("Initializing time...");
 
   time_init();
+
+  Log_trace("Time initialized");
+
+  Log_trace("Initializing window...");
 
   Window_create(1280, 720, "cpirates");
 
   Window_set_window_size_callback(window_size_callback);
   Window_hide_cursor();
 
+  Log_trace("Window initialized");
+
+  Log_trace("Initializing shaders...");
+
   if (Shader_init() != 0) {
     return 1;
   }
+
+  Log_trace("Shaders initialized");
+
+  Log_trace("Initializing game...");
 
   if (Game_init() != 0) {
     return 1;
   }
 
+  Log_trace("Game initialized");
+
+  Log_trace("Initializing game renderer...");
+
   if (GameRenderer_init() != 0) {
     return 1;
   }
 
+  Log_trace("Game renderer initialized");
+
+  Log_trace("Initializing render context...");
+
   render_context = malloc(sizeof(RenderContext));
   *render_context = RenderContext_new();
+
+  Log_trace("Render context initialized");
 
   glEnable(GL_DEPTH_TEST);
 
@@ -57,9 +87,17 @@ int init() {
 int should_close = 0;
 
 void tick() {
+  Log_trace("Ticking input...");
+
   Input_tick();
 
+  Log_trace("Input ticked");
+
+  Log_trace("Ticking game...");
+
   Game_tick();
+
+  Log_trace("Game ticked");
 
   if (Input_is_key_down(KEY_ESCAPE)) {
     should_close = 1;
@@ -82,7 +120,7 @@ int main() {
     return 1;
   }
 
-  printf("Initialized\n");
+  Log_trace("Initialized");
 
   long last_time = get_time_ns();
 
@@ -109,7 +147,9 @@ int main() {
       tick_count++;
 
       long tick_start_time = get_time_ns();
+      Log_trace("Ticking...");
       tick();
+      Log_trace("Ticked");
       long tick_end_time = get_time_ns();
       tick_time_total += tick_end_time - tick_start_time;
 
@@ -118,7 +158,9 @@ int main() {
 
     frame_count++;
     long render_start_time = get_time_ns();
+    Log_trace("Rendering...");
     render();
+    Log_trace("Rendered");
     long render_end_time = get_time_ns();
     render_time_total += render_end_time - render_start_time;
 

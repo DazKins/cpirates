@@ -12,4 +12,6 @@ Id Id_new();
 
 char *Id_to_string(Id id);
 
+int Id_eq(Id a, Id b);
+
 #endif // !ID_H

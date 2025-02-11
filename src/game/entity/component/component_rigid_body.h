@@ -12,7 +12,7 @@ typedef struct {
 } ComponentRigidBody;
 
 ComponentRigidBody *
-ComponentRigidBody_new_ptr(ComponentPosition *component_position);
+ComponentRigidBody_new_ptr(Id entity_id, ComponentPosition *component_position);
 
 void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
                              V push_direction, float push_force);

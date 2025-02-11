@@ -13,11 +13,11 @@ V ComponentPosition_get_rot(ComponentPosition *component_position) {
   return component_position->_rot;
 }
 
-ComponentPosition *ComponentPosition_new_ptr() {
+ComponentPosition *ComponentPosition_new_ptr(Id entity_id) {
   ComponentPosition *component_position = malloc(sizeof(ComponentPosition));
 
   component_position->base =
-      Component_new(ComponentTypePosition, ComponentPosition_tick);
+      Component_new(ComponentTypePosition, entity_id, ComponentPosition_tick);
 
   component_position->pos = V_0;
   component_position->_rot = V_0;

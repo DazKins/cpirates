@@ -5,18 +5,20 @@
 #include "math/v.h"
 #include "util/id.h"
 #include "util/list.h"
+#include "util/map.h"
 
 typedef enum {
   EntityTypeShip,
   EntityTypeCannonball,
 } EntityType;
 
-const char* EntityType_to_string(EntityType type);
+const char *EntityType_to_string(EntityType type);
 
 typedef struct _entity {
   Id id;
   EntityType type;
   List components;
+  HashMap metadata;
 } Entity;
 
 Entity Entity_new(EntityType type);

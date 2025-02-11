@@ -11,7 +11,7 @@ typedef struct {
   V _rot;
 } ComponentPosition;
 
-ComponentPosition *ComponentPosition_new_ptr();
+ComponentPosition *ComponentPosition_new_ptr(Id entity_id);
 void ComponentPosition_set_rot(ComponentPosition *component_position, V rot);
 V ComponentPosition_get_rot(ComponentPosition *component_position);
 

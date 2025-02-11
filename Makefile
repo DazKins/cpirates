@@ -2,8 +2,8 @@
 CC = clang
 
 # Compiler Flags
-COFLAGS = -I./src -DGL_SILENCE_DEPRECATION
-CCFLAGS = -lpng -lglfw -framework OpenGL
+_COFLAGS = -I./src -DGL_SILENCE_DEPRECATION ${COFLAGS}
+_CCFLAGS = -lpng -lglfw -framework OpenGL ${CCFLAGS}
 
 # Directories
 SRCDIR = src
@@ -34,12 +34,12 @@ all: $(TARGET) ress
 
 # Link object files to create the final executable
 $(TARGET): $(OBJECTS)
-	$(CC) $(CCFLAGS) $(OBJECTS) -o $@
+	$(CC) $(_CCFLAGS) $(OBJECTS) -o $@
 
 # Compile source files to object files
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(COFLAGS) -c $< -o $@
+	$(CC) $(_COFLAGS) -c $< -o $@
 
 # Copy shader files to bin directory
 ress: $(RES_TARGETS)

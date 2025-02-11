@@ -59,3 +59,40 @@ void *Iterator_next(Iterator *iterator) {
   iterator->current = iterator->current->next;
   return data;
 }
+
+void List_remove(List *list, void *data) {
+  if (list == NULL) return;
+
+  _ListNode *node = list->head;
+  while (node != NULL) {
+    if (node->data == data) {
+      if (node->prev != NULL) {
+        node->prev->next = node->next;
+      } else {
+        list->head = node->next;
+      }
+
+      if (node->next != NULL) {
+        node->next->prev = node->prev;
+      } else {
+        list->end = node->prev;
+      }
+
+      free(node->data);
+      free(node);
+      break;
+    }
+    node = node->next;
+  }
+}
+
+void List_clear(List *list) {
+  if (list == NULL) return;
+  
+  // Free all nodes and their data using existing _ListNode_free
+  _ListNode_free(list->head);
+  
+  // Reset the list pointers
+  list->head = NULL;
+  list->end = NULL;
+}

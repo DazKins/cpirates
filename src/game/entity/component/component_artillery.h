@@ -19,7 +19,8 @@ typedef struct {
 } ComponentArtillery;
 
 ComponentArtillery *
-ComponentArtillery_new_ptr(ComponentPosition *component_position, int cooldown);
+ComponentArtillery_new_ptr(Id entity_id, ComponentPosition *component_position,
+                           int cooldown);
 
 ArtilleryFireResponse
 ComponentArtillery_fire(ComponentArtillery *component_artillery);

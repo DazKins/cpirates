@@ -39,11 +39,12 @@ void ComponentRigidBody_push(ComponentRigidBody *component_rigid_body,
 }
 
 ComponentRigidBody *
-ComponentRigidBody_new_ptr(ComponentPosition *component_position) {
+ComponentRigidBody_new_ptr(Id entity_id,
+                           ComponentPosition *component_position) {
   ComponentRigidBody *component_rigid_body = malloc(sizeof(ComponentRigidBody));
 
   component_rigid_body->base =
-      Component_new(ComponentTypeRigidBody, ComponentRigidBody_tick);
+      Component_new(ComponentTypeRigidBody, entity_id, ComponentRigidBody_tick);
 
   component_rigid_body->_component_position = component_position;
 
