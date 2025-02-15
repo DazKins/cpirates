@@ -5,10 +5,35 @@
 
 #include "game/entity/component/component_artillery.h"
 #include "game/entity/component/component_collider.h"
+#include "game/entity/component/component_health.h"
 #include "game/entity/component/component_position.h"
 #include "game/entity/component/component_rigid_body.h"
 
-void EntityShip_on_collide(Entity *entity, Entity *hit_entity) {}
+#include "util/log.h"
+
+void EntityShip_on_collide(Entity *entity, Entity *hit_entity) {
+  // Only take damage from cannonballs
+  if (hit_entity->type != EntityTypeCannonball) {
+    return;
+  }
+
+  // Check if this cannonball was fired by us
+  Id *fired_by = HashMap_get(hit_entity->metadata, "fired_by");
+  if (fired_by != NULL && Id_eq(*fired_by, entity->id)) {
+    return;  // Don't take damage from our own cannonballs
+  }
+
+  Log("Ship hit by cannonball");
+
+  // Get the health component
+  ComponentHealth *component_health =
+      (ComponentHealth *)Entity_get_component(entity, ComponentTypeHealth);
+
+  if (component_health != NULL) {
+    // Apply damage when hit by a cannonball
+    ComponentHealth_damage(component_health, 20);
+  }
+}
 
 Entity *EntityShip_new_ptr() {
   Entity *entity = Entity_new_ptr(EntityTypeShip);
@@ -31,6 +56,9 @@ Entity *EntityShip_new_ptr() {
       OBB_new(V_new(0.0f, 0.5f, 0.0f), V_new(1.0f, 0.7f, 1.5f),
               (V[]){V_x, V_y, V_z}));
   Entity_add_component(entity, (Component *)component_collider);
+
+  ComponentHealth *component_health = ComponentHealth_new_ptr(id, 100);
+  Entity_add_component(entity, (Component *)component_health);
 
   return entity;
 }

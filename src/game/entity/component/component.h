@@ -8,6 +8,7 @@ typedef enum {
   ComponentTypeRigidBody,
   ComponentTypeArtillery,
   ComponentTypeCollider,
+  ComponentTypeHealth,
 } ComponentType;
 
 typedef struct _component {
