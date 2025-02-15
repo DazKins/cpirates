@@ -11,7 +11,7 @@
 #include "util/map.h"
 
 ArtilleryFireResponse
-ComponentArtillery_fire(ComponentArtillery *component_artillery) {
+ComponentArtillery_fire(ComponentArtillery *component_artillery, V direction) {
   Log_trace("Firing artillery...");
   if (component_artillery->_currentCooldown > 0) {
     Log_trace("Artillery on cooldown");
@@ -23,7 +23,6 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
   ComponentPosition *component_position =
       component_artillery->_component_position;
   V pos = component_position->pos;
-  V rot = ComponentPosition_get_rot(component_position);
 
   Log_trace("Creating cannonball...");
   Entity *entity_cannonball = EntityCannonball_new_ptr();
@@ -42,7 +41,7 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery) {
       (ComponentRigidBody *)Entity_get_component(entity_cannonball,
                                                  ComponentTypeRigidBody);
   ComponentRigidBody_push(entity_cannonball_component_rigid_body,
-                          V_new(-cos(rot.y), 0.0f, -sin(rot.y)), 0.4f);
+                          direction, 0.4f);
   Log_trace("Rigid body added to cannonball");
   Log_trace("Adding cannonball to game...");
   Game_add_entity(entity_cannonball);

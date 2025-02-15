@@ -3,6 +3,7 @@
 
 #include "game/entity/component/component.h"
 #include "game/entity/component/component_position.h"
+#include "math/v.h"
 
 typedef enum {
   ArtilleryFireResponseSuccess,
@@ -23,6 +24,6 @@ ComponentArtillery_new_ptr(Id entity_id, ComponentPosition *component_position,
                            int cooldown);
 
 ArtilleryFireResponse
-ComponentArtillery_fire(ComponentArtillery *component_artillery);
+ComponentArtillery_fire(ComponentArtillery *component_artillery, V direction);
 
 #endif // !COMPONENT_ARTILLERY_H

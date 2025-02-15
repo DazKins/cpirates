@@ -22,6 +22,7 @@ Camera Game_camera;
 
 Entity *player_ship;
 Entity *ship_0;
+int _current_fire_side;  // 0 for right, 1 for left
 
 void Game_add_entity(Entity *entity) { List_push(&_Game_entities, entity); }
 
@@ -49,6 +50,7 @@ int Game_init() {
   
   _Game_entities = List_new();
   _Game_entity_ids_marked_for_deletion = List_new();
+  _current_fire_side = 0;  // Start firing right
 
   player_ship = EntityShip_new_ptr();
   Game_add_entity(player_ship);
@@ -169,8 +171,23 @@ void Game_tick() {
   Log_trace("Checking for artillery fire...");
   if (Input_is_key_down(KEY_SPACE)) {
     Log_trace("Artillery fire detected");
-    ComponentArtillery_fire((ComponentArtillery *)Entity_get_component(
-        player_ship, ComponentTypeArtillery));
+    ComponentArtillery *artillery = (ComponentArtillery *)Entity_get_component(
+        player_ship, ComponentTypeArtillery);
+    ComponentPosition *position = (ComponentPosition *)Entity_get_component(
+        player_ship, ComponentTypePosition);
+    V rot = ComponentPosition_get_rot(position);
+    
+    // Calculate firing direction based on current side
+    V direction;
+    if (_current_fire_side == 0) {  // Right side
+        direction = V_new(-cos(rot.y), 0.0f, -sin(rot.y));
+    } else {  // Left side
+        direction = V_new(cos(rot.y), 0.0f, sin(rot.y));
+    }
+    
+    if (ComponentArtillery_fire(artillery, direction) == ArtilleryFireResponseSuccess) {
+        _current_fire_side = !_current_fire_side;  // Toggle side after successful fire
+    }
   }
   Log_trace("Artillery fire checked");
 

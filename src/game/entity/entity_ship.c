@@ -48,7 +48,7 @@ Entity *EntityShip_new_ptr() {
   Entity_add_component(entity, (Component *)component_rigid_body);
 
   ComponentArtillery *component_artillery =
-      ComponentArtillery_new_ptr(id, component_position, 160);
+      ComponentArtillery_new_ptr(id, component_position, 80);
   Entity_add_component(entity, (Component *)component_artillery);
 
   ComponentCollider *component_collider = ComponentCollider_new_ptr(
