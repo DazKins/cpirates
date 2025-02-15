@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "game/entity/component/component_rigid_body.h"
+#include "game/entity/component/component_team.h"
 #include "game/entity/entity_cannonball.h"
 #include "game/game.h"
 #include "util/log.h"
@@ -25,7 +26,8 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery, V direction) {
   V pos = component_position->pos;
 
   Log_trace("Creating cannonball...");
-  Entity *entity_cannonball = EntityCannonball_new_ptr();
+  Entity *entity_cannonball =
+      EntityCannonball_new_ptr(component_artillery->_component_team->team);
 
   HashMap_add(entity_cannonball->metadata, "fired_by",
               &component_artillery->base.entity_id);
@@ -40,8 +42,8 @@ ComponentArtillery_fire(ComponentArtillery *component_artillery, V direction) {
   ComponentRigidBody *entity_cannonball_component_rigid_body =
       (ComponentRigidBody *)Entity_get_component(entity_cannonball,
                                                  ComponentTypeRigidBody);
-  ComponentRigidBody_push(entity_cannonball_component_rigid_body,
-                          direction, 0.4f);
+  ComponentRigidBody_push(entity_cannonball_component_rigid_body, direction,
+                          0.4f);
   Log_trace("Rigid body added to cannonball");
   Log_trace("Adding cannonball to game...");
   Game_add_entity(entity_cannonball);
@@ -62,14 +64,16 @@ void ComponentArtillery_tick(Component *component) {
 
 ComponentArtillery *
 ComponentArtillery_new_ptr(Id entity_id, ComponentPosition *component_position,
-                           int cooldown) {
+                           int cooldown, ComponentTeam *component_team) {
   ComponentArtillery *component_artillery = malloc(sizeof(ComponentArtillery));
 
   component_artillery->base =
       Component_new(ComponentTypeArtillery, entity_id, ComponentArtillery_tick);
 
   component_artillery->_component_position = component_position;
+  component_artillery->_component_team = component_team;
   component_artillery->cooldown = cooldown;
+  component_artillery->_currentCooldown = 0;
 
   return component_artillery;
 }

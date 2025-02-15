@@ -3,6 +3,7 @@
 
 #include "game/entity/component/component.h"
 #include "game/entity/component/component_position.h"
+#include "game/entity/component/component_team.h"
 #include "math/v.h"
 
 typedef enum {
@@ -14,6 +15,7 @@ typedef struct {
   Component base;
 
   ComponentPosition *_component_position;
+  ComponentTeam *_component_team;
   int _currentCooldown;
 
   int cooldown;
@@ -21,7 +23,7 @@ typedef struct {
 
 ComponentArtillery *
 ComponentArtillery_new_ptr(Id entity_id, ComponentPosition *component_position,
-                           int cooldown);
+                           int cooldown, ComponentTeam *component_team);
 
 ArtilleryFireResponse
 ComponentArtillery_fire(ComponentArtillery *component_artillery, V direction);

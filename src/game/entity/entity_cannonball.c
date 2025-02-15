@@ -6,6 +6,7 @@
 #include "game/entity/component/component_lifetime.h"
 #include "game/entity/component/component_position.h"
 #include "game/entity/component/component_rigid_body.h"
+#include "game/entity/component/component_team.h"
 #include "game/game.h"
 #include "util/id.h"
 
@@ -25,7 +26,7 @@ void EntityCannonball_on_collide(Entity *entity, Entity *hit_entity) {
   }
 }
 
-Entity *EntityCannonball_new_ptr() {
+Entity *EntityCannonball_new_ptr(Team team) {
   Entity *entity = Entity_new_ptr(EntityTypeCannonball);
 
   Id id = entity->id;
@@ -44,6 +45,9 @@ Entity *EntityCannonball_new_ptr() {
 
   ComponentLifetime *component_lifetime = ComponentLifetime_new_ptr(id, 50);
   Entity_add_component(entity, (Component *)component_lifetime);
+
+  ComponentTeam *component_team = ComponentTeam_new_ptr(id, team);
+  Entity_add_component(entity, (Component *)component_team);
 
   return entity;
 }

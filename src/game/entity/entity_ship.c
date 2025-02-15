@@ -8,6 +8,7 @@
 #include "game/entity/component/component_health.h"
 #include "game/entity/component/component_position.h"
 #include "game/entity/component/component_rigid_body.h"
+#include "game/entity/component/component_team.h"
 
 #include "util/log.h"
 
@@ -23,6 +24,15 @@ void EntityShip_on_collide(Entity *entity, Entity *hit_entity) {
     return;  // Don't take damage from our own cannonballs
   }
 
+  // Get team components
+  ComponentTeam *ship_team = (ComponentTeam *)Entity_get_component(entity, ComponentTypeTeam);
+  ComponentTeam *hit_team = (ComponentTeam *)Entity_get_component(hit_entity, ComponentTypeTeam);
+  
+  // Don't take damage from same team
+  if (ship_team != NULL && hit_team != NULL && ship_team->team == hit_team->team) {
+    return;
+  }
+
   Log("Ship hit by cannonball");
 
   // Get the health component
@@ -35,7 +45,7 @@ void EntityShip_on_collide(Entity *entity, Entity *hit_entity) {
   }
 }
 
-Entity *EntityShip_new_ptr() {
+Entity *EntityShip_new_ptr(Team team) {
   Entity *entity = Entity_new_ptr(EntityTypeShip);
 
   Id id = entity->id;
@@ -47,8 +57,11 @@ Entity *EntityShip_new_ptr() {
       ComponentRigidBody_new_ptr(id, component_position);
   Entity_add_component(entity, (Component *)component_rigid_body);
 
+  ComponentTeam *component_team = ComponentTeam_new_ptr(id, team);
+  Entity_add_component(entity, (Component *)component_team);
+
   ComponentArtillery *component_artillery =
-      ComponentArtillery_new_ptr(id, component_position, 80);
+      ComponentArtillery_new_ptr(id, component_position, 80, component_team);
   Entity_add_component(entity, (Component *)component_artillery);
 
   ComponentCollider *component_collider = ComponentCollider_new_ptr(

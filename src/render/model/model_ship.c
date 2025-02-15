@@ -1,7 +1,10 @@
 #include "model_ship.h"
 
+#include <stdio.h>
+
 #include "render/model/model_builder.h"
 #include "render/shader.h"
+#include "util/file.h"
 
 Model *model_ship;
 
@@ -11,6 +14,29 @@ Model *ModelShip_build() {
   }
 
   ModelBuilder model_builder = ModelBuilder_new();
+
+  // Load and set the team shader
+  const char *ship_vertex_shader_source = load_file("res/shaders/ship.vert");
+  const char *ship_fragment_shader_source = load_file("res/shaders/ship.frag");
+
+  if (ship_vertex_shader_source == NULL ||
+      ship_fragment_shader_source == NULL) {
+    printf("Failed to load ship shader sources\n");
+    return NULL;
+  }
+
+  Shader ship_shader =
+      Shader_new(ship_vertex_shader_source, ship_fragment_shader_source);
+
+  // Free shader sources after creating shader
+  free(ship_vertex_shader_source);
+  free(ship_fragment_shader_source);
+
+  // Set initial team value to prevent undefined behavior
+  Shader_bind(ship_shader);
+  Shader_set_uniform_i(&ship_shader, "team", 0);
+
+  ModelBuilder_set_shader(&model_builder, ship_shader);
 
   float outer_length = 3.0f;
   float inner_length = 2.7f;

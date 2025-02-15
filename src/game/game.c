@@ -9,12 +9,14 @@
 #include "entity/component/component_collider.h"
 #include "entity/component/component_position.h"
 #include "entity/component/component_rigid_body.h"
+#include "entity/component/component_team.h"
 #include "game/entity/entity_ship.h"
 #include "util/id.h"
 #include "util/input.h"
 #include "util/keys.h"
 #include "util/list.h"
 #include "util/log.h"
+#include "util/tim3.h"
 
 List _Game_entities;
 List _Game_entity_ids_marked_for_deletion;
@@ -28,8 +30,8 @@ void Game_add_entity(Entity *entity) { List_push(&_Game_entities, entity); }
 
 List Game_get_entities() { return _Game_entities; }
 
-Entity *Game_spawn_ship_at_position(V position) {
-  Entity *ship = EntityShip_new_ptr();
+Entity *Game_spawn_ship_at_position(V position, Team team) {
+  Entity *ship = EntityShip_new_ptr(team);
   ComponentPosition *ship_position = (ComponentPosition *)Entity_get_component(ship, ComponentTypePosition);
   ship_position->pos = position;
   Game_add_entity(ship);
@@ -41,7 +43,10 @@ void Game_spawn_random_ships(int count) {
     // Generate random x and z coordinates between -20 and 20
     float x = (float)(rand() % 41 - 20);  // -20 to 20
     float z = (float)(rand() % 41 - 20);  // -20 to 20
-    Game_spawn_ship_at_position(V_new(x, 0.0f, z));
+    
+    // Alternate between red and blue teams
+    Team team = (i % 2 == 0) ? TeamRed : TeamBlue;
+    Game_spawn_ship_at_position(V_new(x, 0.0f, z), team);
   }
 }
 
@@ -52,7 +57,8 @@ int Game_init() {
   _Game_entity_ids_marked_for_deletion = List_new();
   _current_fire_side = 0;  // Start firing right
 
-  player_ship = EntityShip_new_ptr();
+  // Create player ship (red team)
+  player_ship = EntityShip_new_ptr(TeamRed);
   Game_add_entity(player_ship);
 
   // Spawn 5 random ships for testing

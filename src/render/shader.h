@@ -20,7 +20,7 @@ void Shader_unbind();
 void Shader_set_uniform_m(const Shader *shader, const char *name, const M *m);
 void Shader_set_uniform_v(const Shader *shader, const char *name, V v);
 void Shader_set_uniform_f(const Shader *shader, const char *name, float f);
-
+void Shader_set_uniform_i(const Shader *shader, const char *name, int i);
 Shader get_currently_bound_shader();
 
 #endif // !SHADER_H

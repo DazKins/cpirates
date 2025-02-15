@@ -10,6 +10,7 @@ typedef enum {
   ComponentTypeCollider,
   ComponentTypeHealth,
   ComponentTypeLifetime,
+  ComponentTypeTeam,
 } ComponentType;
 
 typedef struct _component {
