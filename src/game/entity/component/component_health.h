@@ -7,6 +7,7 @@ typedef struct {
   Component base;
   int health;
   int max_health;
+  int _marked_for_death;  // Internal flag to track if entity should be deleted
 } ComponentHealth;
 
 ComponentHealth *ComponentHealth_new_ptr(Id entity_id, int max_health);
