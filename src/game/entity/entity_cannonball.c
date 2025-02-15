@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "game/entity/component/component_collider.h"
+#include "game/entity/component/component_lifetime.h"
 #include "game/entity/component/component_position.h"
 #include "game/entity/component/component_rigid_body.h"
 #include "game/game.h"
@@ -40,6 +41,9 @@ Entity *EntityCannonball_new_ptr() {
       id, component_position, EntityCannonball_on_collide,
       OBB_new_sym(V_new(0.5f, 0.5f, 0.5f), (V[]){V_x, V_y, V_z}));
   Entity_add_component(entity, (Component *)component_collider);
+
+  ComponentLifetime *component_lifetime = ComponentLifetime_new_ptr(id, 50);
+  Entity_add_component(entity, (Component *)component_lifetime);
 
   return entity;
 }
