@@ -5,6 +5,7 @@
 #include "game/entity/entity.h"
 #include "render/debug/debug.h"
 #include "render/game/entity/entity_renderer.h"
+#include "render/game/entity/health_bar_renderer.h"
 #include "render/model/model.h"
 #include "render/model/model_builder.h"
 #include "render/model/model_sea.h"
@@ -13,6 +14,7 @@
 #include "render/texture.h"
 #include "util/file.h"
 #include "util/id.h"
+#include "util/log.h"
 #include "util/tim3.h"
 
 Texture *texture;
@@ -20,14 +22,22 @@ Texture *texture;
 #define MAX_ENTITY_RENDERERS 1000
 
 HashMap GameRenderer_entity_renderers;
+HealthBarRenderer health_bar_renderer;
 
 Model *model_sea;
 
 int GameRenderer_init() {
+  Log_trace("Loading base texture...");
+
   texture = malloc(sizeof(Texture));
   *texture = Texture_load_from_image("res/img/texture.png");
+  Log_trace("Base texture loaded");
 
   GameRenderer_entity_renderers = HashMap_new(MAX_ENTITY_RENDERERS, sizeof(Id));
+
+  Log_trace("Loading health bar renderer...");
+  health_bar_renderer = HealthBarRenderer_new();
+  Log_trace("Health bar renderer loaded");
 
   model_sea = ModelSea_build();
 
@@ -60,6 +70,10 @@ void GameRenderer_render(RenderContext *render_context) {
 
     if (entity_renderer != NULL) {
       EntityRenderer_render(entity_renderer, render_context);
+      // Render health bar if entity has health component
+      HealthBarRenderer_render(&health_bar_renderer, entity, render_context);
     }
   }
+
+  MStack_pop(&render_context->matrix_stack);
 }
