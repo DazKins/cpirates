@@ -3,8 +3,8 @@
 
 #include "game/entity/entity.h"
 #include "render/camera.h"
-#include "util/list.h"
 #include "util/id.h"
+#include "util/list.h"
 
 int Game_init();
 void Game_tick();

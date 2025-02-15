@@ -24,7 +24,7 @@ Camera Game_camera;
 
 Entity *player_ship;
 Entity *ship_0;
-int _current_fire_side;  // 0 for right, 1 for left
+int _current_fire_side; // 0 for right, 1 for left
 
 void Game_add_entity(Entity *entity) { List_push(&_Game_entities, entity); }
 
@@ -32,7 +32,8 @@ List Game_get_entities() { return _Game_entities; }
 
 Entity *Game_spawn_ship_at_position(V position, Team team) {
   Entity *ship = EntityShip_new_ptr(team);
-  ComponentPosition *ship_position = (ComponentPosition *)Entity_get_component(ship, ComponentTypePosition);
+  ComponentPosition *ship_position =
+      (ComponentPosition *)Entity_get_component(ship, ComponentTypePosition);
   ship_position->pos = position;
   Game_add_entity(ship);
   return ship;
@@ -41,9 +42,9 @@ Entity *Game_spawn_ship_at_position(V position, Team team) {
 void Game_spawn_random_ships(int count) {
   for (int i = 0; i < count; i++) {
     // Generate random x and z coordinates between -20 and 20
-    float x = (float)(rand() % 41 - 20);  // -20 to 20
-    float z = (float)(rand() % 41 - 20);  // -20 to 20
-    
+    float x = (float)(rand() % 41 - 20); // -20 to 20
+    float z = (float)(rand() % 41 - 20); // -20 to 20
+
     // Alternate between red and blue teams
     Team team = (i % 2 == 0) ? TeamRed : TeamBlue;
     Game_spawn_ship_at_position(V_new(x, 0.0f, z), team);
@@ -51,11 +52,11 @@ void Game_spawn_random_ships(int count) {
 }
 
 int Game_init() {
-  srand(time(NULL));  // Initialize random seed
-  
+  srand(time(NULL)); // Initialize random seed
+
   _Game_entities = List_new();
   _Game_entity_ids_marked_for_deletion = List_new();
-  _current_fire_side = 0;  // Start firing right
+  _current_fire_side = 0; // Start firing right
 
   // Create player ship (red team)
   player_ship = EntityShip_new_ptr(TeamRed);
@@ -182,17 +183,19 @@ void Game_tick() {
     ComponentPosition *position = (ComponentPosition *)Entity_get_component(
         player_ship, ComponentTypePosition);
     V rot = ComponentPosition_get_rot(position);
-    
+
     // Calculate firing direction based on current side
     V direction;
-    if (_current_fire_side == 0) {  // Right side
-        direction = V_new(-cos(rot.y), 0.0f, -sin(rot.y));
-    } else {  // Left side
-        direction = V_new(cos(rot.y), 0.0f, sin(rot.y));
+    if (_current_fire_side == 0) { // Right side
+      direction = V_new(-cos(rot.y), 0.0f, -sin(rot.y));
+    } else { // Left side
+      direction = V_new(cos(rot.y), 0.0f, sin(rot.y));
     }
-    
-    if (ComponentArtillery_fire(artillery, direction) == ArtilleryFireResponseSuccess) {
-        _current_fire_side = !_current_fire_side;  // Toggle side after successful fire
+
+    if (ComponentArtillery_fire(artillery, direction) ==
+        ArtilleryFireResponseSuccess) {
+      _current_fire_side =
+          !_current_fire_side; // Toggle side after successful fire
     }
   }
   Log_trace("Artillery fire checked");

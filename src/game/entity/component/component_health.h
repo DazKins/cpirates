@@ -15,4 +15,4 @@ void ComponentHealth_heal(ComponentHealth *component_health, int heal_amount);
 int ComponentHealth_get_health(ComponentHealth *component_health);
 int ComponentHealth_get_max_health(ComponentHealth *component_health);
 
-#endif // !COMPONENT_HEALTH_H 
+#endif // !COMPONENT_HEALTH_H

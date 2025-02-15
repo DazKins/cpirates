@@ -21,15 +21,18 @@ void EntityShip_on_collide(Entity *entity, Entity *hit_entity) {
   // Check if this cannonball was fired by us
   Id *fired_by = HashMap_get(hit_entity->metadata, "fired_by");
   if (fired_by != NULL && Id_eq(*fired_by, entity->id)) {
-    return;  // Don't take damage from our own cannonballs
+    return; // Don't take damage from our own cannonballs
   }
 
   // Get team components
-  ComponentTeam *ship_team = (ComponentTeam *)Entity_get_component(entity, ComponentTypeTeam);
-  ComponentTeam *hit_team = (ComponentTeam *)Entity_get_component(hit_entity, ComponentTypeTeam);
-  
+  ComponentTeam *ship_team =
+      (ComponentTeam *)Entity_get_component(entity, ComponentTypeTeam);
+  ComponentTeam *hit_team =
+      (ComponentTeam *)Entity_get_component(hit_entity, ComponentTypeTeam);
+
   // Don't take damage from same team
-  if (ship_team != NULL && hit_team != NULL && ship_team->team == hit_team->team) {
+  if (ship_team != NULL && hit_team != NULL &&
+      ship_team->team == hit_team->team) {
     return;
   }
 

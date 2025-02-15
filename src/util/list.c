@@ -61,7 +61,8 @@ void *Iterator_next(Iterator *iterator) {
 }
 
 void List_remove(List *list, void *data) {
-  if (list == NULL) return;
+  if (list == NULL)
+    return;
 
   _ListNode *node = list->head;
   while (node != NULL) {
@@ -87,11 +88,12 @@ void List_remove(List *list, void *data) {
 }
 
 void List_clear(List *list) {
-  if (list == NULL) return;
-  
+  if (list == NULL)
+    return;
+
   // Free all nodes and their data using existing _ListNode_free
   _ListNode_free(list->head);
-  
+
   // Reset the list pointers
   list->head = NULL;
   list->end = NULL;

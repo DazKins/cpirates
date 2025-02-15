@@ -21,6 +21,4 @@ char *Id_to_string(Id id) {
   return str;
 }
 
-int Id_eq(Id a, Id b) {
-  return a._0 == b._0 && a._1 == b._1;
-}
+int Id_eq(Id a, Id b) { return a._0 == b._0 && a._1 == b._1; }

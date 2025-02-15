@@ -15,4 +15,4 @@ typedef struct {
 
 ComponentTeam *ComponentTeam_new_ptr(Id entity_id, Team team);
 
-#endif // !COMPONENT_TEAM_H 
+#endif // !COMPONENT_TEAM_H

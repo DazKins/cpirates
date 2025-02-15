@@ -9,10 +9,10 @@
 #include "render/render_context.h"
 #include "render/window.h"
 #include "util/config.h"
-#include "util/log.h"
 #include "util/id.h"
 #include "util/input.h"
 #include "util/keys.h"
+#include "util/log.h"
 #include "util/tim3.h"
 
 RenderContext *render_context;

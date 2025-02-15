@@ -83,9 +83,7 @@ V V_wrap(V v, float min, float max) {
   return v;
 }
 
-float V_dot(V v0, V v1) {
-  return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
-}
+float V_dot(V v0, V v1) { return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z; }
 
 V2 V2_sub(V2 a, V2 b) { return V2_new(a.x - b.x, a.y - b.y); }
 
